@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 
 export function Hero() {
@@ -15,8 +16,9 @@ export function Hero() {
 
   return (
     <section className="relative bg-[var(--color-surface)]">
-      <div className="mx-auto flex min-h-[92dvh] max-w-7xl flex-col justify-center px-5 pt-28 pb-20 sm:px-8 lg:px-10 lg:pt-32">
-        <div className="max-w-2xl">
+      <div className="mx-auto grid min-h-[92dvh] max-w-7xl items-center px-5 pt-24 pb-16 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:px-10 lg:pt-28">
+        {/* Text + form */}
+        <div className="order-2 mt-10 lg:order-1 lg:mt-0">
           <p className="label-sm mb-6 text-[var(--color-brand)]">
             Since 2018 — 500+ transformations
           </p>
@@ -78,20 +80,36 @@ export function Hero() {
               </p>
             </form>
           )}
+
+          {/* Stats */}
+          <div className="mt-12 flex flex-wrap gap-6 border-t border-[var(--color-border-strong)] pt-7 sm:mt-14 sm:gap-10">
+            {[
+              { value: "500+", label: "Members" },
+              { value: "4.9", label: "Google Rating" },
+              { value: "100%", label: "Doctor-reviewed" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <span className="number-display text-2xl text-[var(--color-ink)]">{stat.value}</span>
+                <span className="ml-1.5 text-sm font-medium text-[var(--color-ink-muted)]">{stat.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Stats row */}
-        <div className="mt-16 flex flex-wrap gap-6 border-t border-[var(--color-border-strong)] pt-8 sm:gap-10">
-          {[
-            { value: "500+", label: "Members" },
-            { value: "4.9", label: "Google Rating" },
-            { value: "100%", label: "Doctor-reviewed" },
-          ].map((stat) => (
-            <div key={stat.label}>
-              <span className="number-display text-2xl text-[var(--color-ink)]">{stat.value}</span>
-              <span className="ml-1.5 text-sm font-medium text-[var(--color-ink-muted)]">{stat.label}</span>
-            </div>
-          ))}
+        {/* Image */}
+        <div className="order-1 lg:order-2">
+          <div className="relative mx-auto aspect-[4/5] max-w-xs overflow-hidden rounded-2xl sm:max-w-sm lg:max-w-none lg:rounded-3xl">
+            <Image
+              src="/images/hero-coach.png"
+              alt="Health coach — personalised fitness and nutrition"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 320px, 45vw"
+              priority
+            />
+            {/* Subtle bottom fade into page bg */}
+            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[var(--color-surface)] to-transparent lg:h-24" />
+          </div>
         </div>
       </div>
     </section>

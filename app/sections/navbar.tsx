@@ -62,7 +62,7 @@ export function Navbar() {
               rel="noopener noreferrer"
               className="group flex items-center gap-1.5 rounded-full border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3.5 py-1.5 text-[0.78rem] font-medium text-[var(--color-ink-secondary)] transition-all hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
             >
-              Parents (55+)?
+              Omfit for Parents
               <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
 
@@ -115,7 +115,7 @@ export function Navbar() {
                   onClick={() => setIsOpen(false)}
                   className="flex items-center gap-2 rounded-xl px-3 py-3.5 text-[0.95rem] font-medium text-[var(--color-ink-secondary)] transition-colors hover:bg-[var(--color-surface-sunken)]"
                 >
-                  Parents (55+)?
+                  Omfit for Parents
                   <ArrowUpRight className="h-3.5 w-3.5" />
                 </a>
               </div>
