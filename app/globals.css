@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+/* ============================================
+   OMFIT.IN — WARM EARTHEN DESIGN SYSTEM
+   Premium health & fitness brand
+   ============================================ */
+
+@theme inline {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* --- Warm Earth Palette --- */
+  --color-ink: #1a1714;
+  --color-ink-secondary: #4a4540;
+  --color-ink-muted: #7a7369;
+  --color-ink-faint: #a69e94;
+
+  --color-surface: #faf7f2;
+  --color-surface-raised: #fffdf9;
+  --color-surface-sunken: #f3ede4;
+  --color-surface-dark: #1a1714;
+  --color-surface-dark-raised: #2a2520;
+
+  --color-brand: #3d6b4f;
+  --color-brand-light: #5a8f6d;
+  --color-brand-dark: #2d5039;
+  --color-brand-muted: rgba(61, 107, 79, 0.08);
+  --color-brand-glow: rgba(61, 107, 79, 0.15);
+
+  --color-accent: #c4704b;
+  --color-accent-light: #d4845f;
+  --color-accent-muted: rgba(196, 112, 75, 0.1);
+
+  --color-success: #6b8f5e;
+  --color-success-muted: rgba(107, 143, 94, 0.1);
+
+  --color-on-dark: #f5f0e8;
+  --color-on-dark-secondary: rgba(245, 240, 232, 0.7);
+  --color-on-dark-muted: rgba(245, 240, 232, 0.4);
+
+  --color-border: rgba(26, 23, 20, 0.08);
+  --color-border-strong: rgba(26, 23, 20, 0.14);
+}
+
+/* ============================================
+   BASE
+   ============================================ */
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 450;
+    font-feature-settings: "ss01", "ss02", "cv01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.011em;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+}
+
+/* ============================================
+   TYPOGRAPHY SYSTEM
+   ============================================ */
+
+.display-xl {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  font-size: clamp(2.75rem, 5.5vw, 4.5rem);
+  font-variation-settings: "opsz" 144;
+}
+
+.display-lg {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-size: clamp(1.875rem, 3.5vw, 2.75rem);
+  font-variation-settings: "opsz" 72;
+}
+
+.display-md {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  font-size: clamp(1.375rem, 2.5vw, 1.875rem);
+  font-variation-settings: "opsz" 48;
+}
+
+.body-lg {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+.body-md {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+.label-sm {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.label-md {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.number-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  font-variation-settings: "opsz" 144;
+}
+
+/* ============================================
+   FORM INPUTS
+   ============================================ */
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1.5px solid var(--color-border-strong);
+  background: var(--color-surface-raised);
+  color: var(--color-ink);
+  font-size: 0.9375rem;
+  font-family: var(--font-sans);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.form-input::placeholder {
+  color: var(--color-ink-faint);
+}
+
+.form-input:focus {
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 3px var(--color-brand-muted);
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
