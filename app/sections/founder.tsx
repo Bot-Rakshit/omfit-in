@@ -1,33 +1,7 @@
 "use client"
 
-import { motion } from "framer-motion"
 import Image from "next/image"
 import { Quote } from "lucide-react"
-
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
-}
-
-const easeOut = [0.25, 0.46, 0.45, 0.94] as const
-
-const slideLeft = {
-  hidden: { opacity: 0, x: -32 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.7, ease: easeOut },
-  },
-}
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: easeOut },
-  },
-}
 
 const stats = [
   { number: "2018", label: "Founded" },
@@ -38,15 +12,9 @@ const stats = [
 export function Founder() {
   return (
     <section className="bg-[var(--color-surface-dark)]" id="about">
-      <motion.div
-        className="mx-auto grid max-w-7xl gap-12 px-5 py-24 sm:px-8 sm:py-32 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-36"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-      >
+      <div className="mx-auto grid max-w-7xl gap-12 px-5 py-24 sm:px-8 sm:py-32 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-36">
         {/* Photo */}
-        <motion.div className="relative" variants={slideLeft}>
+        <div className="relative">
           <div className="relative mx-auto aspect-[3/4] max-w-md overflow-hidden rounded-2xl lg:mx-0 lg:max-w-none">
             <Image
               src="/images/omkar.jpeg"
@@ -61,39 +29,32 @@ export function Founder() {
               <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[var(--color-on-dark)] sm:text-3xl">
                 Omkar
               </p>
-              <p className="label-sm mt-1 text-[var(--color-on-dark-secondary)]">
-                Founder, OMFIT
-              </p>
+              <p className="label-sm mt-1 text-[var(--color-on-dark-secondary)]">Founder, OMFIT</p>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Text */}
-        <motion.div className="flex flex-col justify-center" variants={containerVariants}>
-          <motion.span className="label-sm mb-5 text-[var(--color-accent)]" variants={fadeUp}>
-            Our story
-          </motion.span>
+        <div className="flex flex-col justify-center">
+          <span className="label-sm mb-5 text-[var(--color-accent)]">Our story</span>
 
-          <motion.h2 className="display-md mb-8 text-[var(--color-on-dark)]" variants={fadeUp}>
+          <h2 className="display-md mb-8 text-[var(--color-on-dark)]">
             Built from personal frustration with the fitness industry
-          </motion.h2>
+          </h2>
 
-          <motion.p className="body-lg mb-5 text-[var(--color-on-dark-secondary)]" variants={fadeUp}>
+          <p className="body-lg mb-5 text-[var(--color-on-dark-secondary)]">
             OMFIT was founded in 2018 with a simple belief: fitness should be
             scientific, personalised, and accessible. Not aggressive. Not
             aesthetic-obsessed. Not about pills and powders.
-          </motion.p>
+          </p>
 
-          <motion.p className="body-lg mb-10 text-[var(--color-on-dark-secondary)]" variants={fadeUp}>
+          <p className="body-lg mb-10 text-[var(--color-on-dark-secondary)]">
             We work with a scientific approach and a vision to impact 1 billion
             lives. Every program, every meal plan, every coaching session is
             designed to make you the best version of yourself — naturally.
-          </motion.p>
+          </p>
 
-          <motion.blockquote
-            className="relative mb-12 rounded-xl border border-[var(--color-on-dark-muted)] bg-[var(--color-surface-dark-raised)] px-6 py-6 sm:px-8"
-            variants={fadeUp}
-          >
+          <blockquote className="relative mb-12 rounded-xl border border-[var(--color-on-dark-muted)] bg-[var(--color-surface-dark-raised)] px-6 py-6 sm:px-8">
             <Quote className="mb-3 h-5 w-5 text-[var(--color-accent)] opacity-70" />
             <p className="font-[family-name:var(--font-display)] text-[0.95rem] font-medium leading-relaxed text-[var(--color-on-dark)] italic">
               &ldquo;Aesthetics is not the goal, it is a by-product. Our
@@ -102,13 +63,11 @@ export function Founder() {
             </p>
             <footer className="mt-4 flex items-center gap-3">
               <div className="h-px flex-1 bg-[var(--color-on-dark-muted)]" />
-              <span className="label-sm text-[var(--color-on-dark-muted)]">
-                Omkar, Founder
-              </span>
+              <span className="label-sm text-[var(--color-on-dark-muted)]">Omkar, Founder</span>
             </footer>
-          </motion.blockquote>
+          </blockquote>
 
-          <motion.div className="flex flex-wrap gap-8 sm:gap-12" variants={fadeUp}>
+          <div className="flex flex-wrap gap-8 sm:gap-12">
             {stats.map((stat) => (
               <div key={stat.label}>
                 <span className="number-display block text-2xl text-[var(--color-on-dark)] sm:text-3xl">
@@ -119,9 +78,9 @@ export function Founder() {
                 </span>
               </div>
             ))}
-          </motion.div>
-        </motion.div>
-      </motion.div>
+          </div>
+        </div>
+      </div>
     </section>
   )
 }

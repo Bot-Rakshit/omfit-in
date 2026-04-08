@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
 import { Phone, Mail, MapPin, Instagram, Youtube, Linkedin } from "lucide-react"
 import Link from "next/link"
 
@@ -32,20 +31,6 @@ const socials = [
   { icon: Linkedin, href: "https://linkedin.com/company/omfit", label: "LinkedIn" },
 ]
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.06 } },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  },
-}
-
 function FooterColumn({
   title,
   links,
@@ -54,7 +39,7 @@ function FooterColumn({
   links: { label: string; href: string; external?: boolean }[]
 }) {
   return (
-    <motion.div variants={itemVariants}>
+    <div>
       <h4 className="label-sm mb-5 text-[var(--color-on-dark-muted)]">{title}</h4>
       <ul className="space-y-3">
         {links.map((link) => (
@@ -69,23 +54,17 @@ function FooterColumn({
           </li>
         ))}
       </ul>
-    </motion.div>
+    </div>
   )
 }
 
 export function Footer() {
   return (
     <footer className="bg-[var(--color-surface-dark)]">
-      <motion.div
-        className="mx-auto max-w-6xl px-6 pt-16 sm:pt-20"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-60px" }}
-        variants={containerVariants}
-      >
+      <div className="mx-auto max-w-6xl px-6 pt-16 sm:pt-20">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {/* Brand */}
-          <motion.div variants={itemVariants} className="sm:col-span-2 lg:col-span-1">
+          <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" className="inline-block">
               <span className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[var(--color-on-dark)]">
                 OMFIT
@@ -116,7 +95,7 @@ export function Footer() {
                 <span>201, Altius, Samarth Colony, Pimple Nilakh, Pune 411027</span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           <FooterColumn title="PROGRAMS" links={footerLinks.programs} />
           <FooterColumn title="CONDITIONS" links={footerLinks.conditions} />
@@ -124,7 +103,7 @@ export function Footer() {
         </div>
 
         {/* Social */}
-        <motion.div variants={itemVariants} className="mt-14 flex gap-3">
+        <div className="mt-14 flex gap-3">
           {socials.map((social) => {
             const Icon = social.icon
             return (
@@ -140,33 +119,23 @@ export function Footer() {
               </Link>
             )
           })}
-        </motion.div>
+        </div>
 
         <div className="mt-10 border-t border-[var(--color-on-dark-muted)]" />
 
         <div className="flex flex-col items-center justify-between gap-4 py-6 sm:flex-row">
-          <p className="text-sm text-[var(--color-on-dark-muted)]">
-            &copy; 2026 OMFIT. All rights reserved.
-          </p>
+          <p className="text-sm text-[var(--color-on-dark-muted)]">&copy; 2026 OMFIT. All rights reserved.</p>
           <div className="flex flex-wrap items-center gap-1 text-sm text-[var(--color-on-dark-muted)]">
-            <Link href="/privacy" className="px-2 py-1 transition-colors duration-200 hover:text-[var(--color-on-dark-secondary)]">
-              Privacy
-            </Link>
+            <Link href="/privacy" className="px-2 py-1 transition-colors duration-200 hover:text-[var(--color-on-dark-secondary)]">Privacy</Link>
             <span className="opacity-30">&middot;</span>
-            <Link href="/terms" className="px-2 py-1 transition-colors duration-200 hover:text-[var(--color-on-dark-secondary)]">
-              Terms
-            </Link>
+            <Link href="/terms" className="px-2 py-1 transition-colors duration-200 hover:text-[var(--color-on-dark-secondary)]">Terms</Link>
             <span className="opacity-30">&middot;</span>
-            <Link href="/refund" className="px-2 py-1 transition-colors duration-200 hover:text-[var(--color-on-dark-secondary)]">
-              Refunds
-            </Link>
+            <Link href="/refund" className="px-2 py-1 transition-colors duration-200 hover:text-[var(--color-on-dark-secondary)]">Refunds</Link>
             <span className="opacity-30">&middot;</span>
-            <Link href="/consent" className="px-2 py-1 transition-colors duration-200 hover:text-[var(--color-on-dark-secondary)]">
-              Consent
-            </Link>
+            <Link href="/consent" className="px-2 py-1 transition-colors duration-200 hover:text-[var(--color-on-dark-secondary)]">Consent</Link>
           </div>
         </div>
-      </motion.div>
+      </div>
     </footer>
   )
 }

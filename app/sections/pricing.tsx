@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
 import { Check, ArrowRight, Crown, Dumbbell, Zap } from "lucide-react"
 
 const plans = [
@@ -73,59 +72,31 @@ const plans = [
   },
 ]
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  },
-}
-
 export function Pricing() {
   return (
     <section id="pricing" className="bg-[var(--color-surface-sunken)] py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const }}
-          className="mb-14 text-center sm:mb-16"
-        >
+        <div className="mb-14 text-center sm:mb-16">
           <span className="label-sm mb-4 inline-block text-[var(--color-accent)]">Pricing</span>
           <h2 className="display-lg text-[var(--color-ink)]">Invest in your health</h2>
           <p className="body-lg mx-auto mt-4 max-w-xl text-[var(--color-ink-secondary)]">
             Transparent pricing, no hidden fees. Every program includes
             everything you need to transform your health.
           </p>
-        </motion.div>
+        </div>
 
         {/* Cards */}
-        <motion.div
-          className="mx-auto grid max-w-sm gap-6 md:max-w-none md:grid-cols-3 lg:gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-        >
+        <div className="mx-auto grid max-w-sm gap-6 md:max-w-none md:grid-cols-3 lg:gap-8">
           {plans.map((plan) => {
             const Icon = plan.icon
 
             if (plan.highlighted) {
               return (
-                <motion.div
+                <div
                   key={plan.id}
-                  variants={itemVariants}
                   className="relative flex flex-col overflow-hidden rounded-2xl border border-[var(--color-brand)]/20 bg-[var(--color-surface-dark)] shadow-xl md:-my-4 md:z-10"
                 >
-                  {/* Top accent */}
                   <div className="h-1 w-full bg-[var(--color-brand)]" />
 
                   {plan.badge && (
@@ -155,13 +126,9 @@ export function Pricing() {
                       </div>
                       {(plan.perDay || plan.emi) && (
                         <div className="mt-1.5 flex items-center gap-2">
-                          {plan.perDay && (
-                            <span className="text-[0.8125rem] font-medium text-[var(--color-brand-light)]">{plan.perDay}</span>
-                          )}
-                          {plan.perDay && plan.emi && <span className="text-[var(--color-on-dark-muted)]">·</span>}
-                          {plan.emi && (
-                            <span className="text-[0.8125rem] text-[var(--color-on-dark-muted)]">{plan.emi}</span>
-                          )}
+                          {plan.perDay && <span className="text-[0.8125rem] font-medium text-[var(--color-brand-light)]">{plan.perDay}</span>}
+                          {plan.perDay && plan.emi && <span className="text-[var(--color-on-dark-muted)]">&middot;</span>}
+                          {plan.emi && <span className="text-[0.8125rem] text-[var(--color-on-dark-muted)]">{plan.emi}</span>}
                         </div>
                       )}
                     </div>
@@ -181,21 +148,20 @@ export function Pricing() {
 
                     <a
                       href={plan.ctaHref}
-                      className="group mt-8 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-brand)] px-6 py-3.5 text-[0.9375rem] font-semibold text-white transition-all hover:bg-[var(--color-brand-dark)] active:scale-[0.98]"
+                      className="group mt-8 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-brand)] px-6 py-3.5 text-[0.9375rem] font-semibold text-white transition-colors hover:bg-[var(--color-brand-dark)] active:scale-[0.98]"
                     >
                       {plan.cta}
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </a>
                   </div>
-                </motion.div>
+                </div>
               )
             }
 
             return (
-              <motion.div
+              <div
                 key={plan.id}
-                variants={itemVariants}
-                className="relative flex flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-raised)] transition-all duration-300 hover:border-[var(--color-border-strong)] hover:shadow-md"
+                className="relative flex flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-raised)] transition-all duration-200 hover:border-[var(--color-border-strong)] hover:shadow-md"
               >
                 {plan.badge && (
                   <div className="flex justify-start px-7 pt-6 sm:px-8">
@@ -243,21 +209,14 @@ export function Pricing() {
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </a>
                 </div>
-              </motion.div>
+              </div>
             )
           })}
-        </motion.div>
+        </div>
 
-        {/* Trust note */}
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 0.4 }}
-          className="mt-12 text-center text-[0.875rem] font-medium text-[var(--color-ink-muted)]"
-        >
+        <p className="mt-12 text-center text-[0.875rem] font-medium text-[var(--color-ink-muted)]">
           7-day satisfaction guarantee &middot; No questions asked refund policy
-        </motion.p>
+        </p>
       </div>
     </section>
   )

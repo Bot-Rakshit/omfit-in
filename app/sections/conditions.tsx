@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 
 /* ── Custom SVG icons ── */
@@ -88,43 +87,13 @@ const conditions = [
   },
 ]
 
-/* ── Animations ── */
-const sectionVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-}
-const headingVariants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  },
-}
-const cardVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  },
-}
-
 export function Conditions() {
   return (
     <section className="bg-[var(--color-surface-sunken)] py-24 sm:py-32">
-      <motion.div
-        className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-      >
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         {/* Header */}
-        <motion.div className="mx-auto mb-16 max-w-2xl text-center sm:mb-20" variants={headingVariants}>
-          <span className="label-sm mb-4 inline-block text-[var(--color-brand)]">
-            Specialised care
-          </span>
+        <div className="mx-auto mb-16 max-w-2xl text-center sm:mb-20">
+          <span className="label-sm mb-4 inline-block text-[var(--color-brand)]">Specialised care</span>
           <h2 className="display-lg mb-5 text-[var(--color-ink)]">
             Programs designed for
             <br className="hidden sm:block" /> your condition
@@ -133,17 +102,16 @@ export function Conditions() {
             We communicate directly with your physician to ensure every meal
             plan and training protocol complements your medical treatment.
           </p>
-        </motion.div>
+        </div>
 
         {/* Cards */}
         <div className="grid gap-6 md:grid-cols-3 lg:gap-8">
           {conditions.map((condition) => {
             const Icon = condition.icon
             return (
-              <motion.div
+              <div
                 key={condition.id}
-                variants={cardVariants}
-                className="group relative flex flex-col rounded-2xl border bg-[var(--color-surface-raised)] p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:p-8"
+                className="group relative flex flex-col rounded-2xl border bg-[var(--color-surface-raised)] p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg sm:p-8"
                 style={{ borderColor: condition.borderTint }}
               >
                 <div
@@ -160,9 +128,7 @@ export function Conditions() {
                   {condition.subtitle}
                 </p>
 
-                <p className="body-md mb-6 flex-1 text-[var(--color-ink-secondary)]">
-                  {condition.description}
-                </p>
+                <p className="body-md mb-6 flex-1 text-[var(--color-ink-secondary)]">{condition.description}</p>
 
                 <div className="mb-6 rounded-xl px-5 py-4" style={{ backgroundColor: condition.accentBg }}>
                   <span className="number-display block text-3xl sm:text-4xl" style={{ color: condition.color }}>
@@ -181,11 +147,11 @@ export function Conditions() {
                   Learn more
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                 </a>
-              </motion.div>
+              </div>
             )
           })}
         </div>
-      </motion.div>
+      </div>
     </section>
   )
 }

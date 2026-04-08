@@ -1,7 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
-
 interface Testimonial {
   name: string
   age: number
@@ -55,38 +53,18 @@ const testimonials: Testimonial[] = [
   },
 ]
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
-}
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  },
-}
-
-function TestimonialCard({
-  testimonial,
-  index,
-}: {
-  testimonial: Testimonial
-  index: number
-}) {
+function TestimonialCard({ testimonial, index }: { testimonial: Testimonial; index: number }) {
   return (
-    <motion.div
-      variants={cardVariants}
-      className={`group relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-raised)] transition-shadow duration-300 hover:shadow-md ${
+    <div
+      className={`group relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-raised)] transition-shadow duration-200 hover:shadow-md ${
         index === 1 || index === 3 ? "md:mt-8" : ""
       }`}
     >
       <div className="p-6 sm:p-7">
-        {/* Header */}
         <div className="mb-5 flex items-start gap-4">
-          <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${testimonial.accentColor} text-sm font-bold text-white`}>
+          <div
+            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${testimonial.accentColor} text-sm font-bold text-white`}
+          >
             {testimonial.initials}
           </div>
           <div className="min-w-0">
@@ -99,7 +77,6 @@ function TestimonialCard({
           </div>
         </div>
 
-        {/* Tags */}
         <div className="mb-4 flex flex-wrap gap-1.5">
           {testimonial.tags.map((tag) => (
             <span
@@ -111,12 +88,11 @@ function TestimonialCard({
           ))}
         </div>
 
-        {/* Quote */}
         <blockquote className="body-md leading-relaxed text-[var(--color-ink-secondary)]">
           &ldquo;{testimonial.quote}&rdquo;
         </blockquote>
       </div>
-    </motion.div>
+    </div>
   )
 }
 
@@ -124,38 +100,18 @@ export function Testimonials() {
   return (
     <section className="bg-[var(--color-surface)] py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-6">
-        {/* Header */}
-        <motion.div
-          className="mb-12 max-w-xl sm:mb-16"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const }}
-        >
+        <div className="mb-12 max-w-xl sm:mb-16">
           <span className="label-sm mb-4 inline-block text-[var(--color-accent)]">
             Real stories
           </span>
-          <h2 className="display-md">
-            Members who transformed their lives
-          </h2>
-        </motion.div>
+          <h2 className="display-md">Members who transformed their lives</h2>
+        </div>
 
-        {/* Grid */}
-        <motion.div
-          className="grid gap-6 sm:grid-cols-2 sm:gap-7"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-        >
+        <div className="grid gap-6 sm:grid-cols-2 sm:gap-7">
           {testimonials.map((testimonial, index) => (
-            <TestimonialCard
-              key={testimonial.name}
-              testimonial={testimonial}
-              index={index}
-            />
+            <TestimonialCard key={testimonial.name} testimonial={testimonial} index={index} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   )
