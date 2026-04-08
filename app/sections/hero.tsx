@@ -81,7 +81,7 @@ export function Hero() {
         </div>
 
         {/* Stats row */}
-        <div className="mt-16 flex flex-wrap gap-10 border-t border-[var(--color-border-strong)] pt-8">
+        <div className="mt-16 flex flex-wrap gap-6 border-t border-[var(--color-border-strong)] pt-8 sm:gap-10">
           {[
             { value: "500+", label: "Members" },
             { value: "4.9", label: "Google Rating" },

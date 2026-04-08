@@ -121,7 +121,7 @@ export function Pricing() {
 
                     <div className="mt-6">
                       <div className="flex items-baseline gap-1">
-                        <span className="number-display text-[2.5rem] text-white">{plan.price}</span>
+                        <span className="number-display text-[2rem] text-white sm:text-[2.5rem]">{plan.price}</span>
                         <span className="text-[0.9375rem] font-medium text-[var(--color-on-dark-muted)]">/ {plan.period}</span>
                       </div>
                       {(plan.perDay || plan.emi) && (
@@ -184,7 +184,7 @@ export function Pricing() {
                   <p className="body-md mt-3 text-[var(--color-ink-secondary)]">{plan.description}</p>
 
                   <div className="mt-6">
-                    <span className="number-display text-[2.25rem] text-[var(--color-ink)]">{plan.price}</span>
+                    <span className="number-display text-[1.75rem] text-[var(--color-ink)] sm:text-[2.25rem]">{plan.price}</span>
                     <span className="ml-1 text-[0.9375rem] font-medium text-[var(--color-ink-muted)]">/ {plan.period}</span>
                   </div>
 

@@ -78,12 +78,12 @@ const trainingFeatures = [
 function CountdownCell({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center gap-1">
-      <div className="flex h-12 w-14 items-center justify-center rounded-lg bg-[var(--color-accent-muted)] sm:h-14 sm:w-16">
-        <span className="number-display text-xl text-[var(--color-accent)] sm:text-2xl">
+      <div className="flex h-10 w-11 items-center justify-center rounded-lg bg-[var(--color-accent-muted)] sm:h-14 sm:w-16">
+        <span className="number-display text-lg text-[var(--color-accent)] sm:text-2xl">
           {String(value).padStart(2, "0")}
         </span>
       </div>
-      <span className="label-sm text-[0.6rem] text-[var(--color-ink-faint)]">{label}</span>
+      <span className="label-sm text-[0.55rem] text-[var(--color-ink-faint)] sm:text-[0.6rem]">{label}</span>
     </div>
   )
 }
@@ -127,7 +127,7 @@ export function Programs() {
             </p>
 
             <div className="mb-8">
-              <span className="number-display text-4xl text-[var(--color-on-dark)] sm:text-5xl">
+              <span className="number-display text-3xl text-[var(--color-on-dark)] sm:text-5xl">
                 &#8377;18,000
               </span>
               <p className="mt-1.5 text-sm text-[var(--color-on-dark-muted)]">
@@ -136,7 +136,7 @@ export function Programs() {
             </div>
 
             {/* Countdown */}
-            <div className="mb-10 rounded-2xl bg-[var(--color-surface-dark-raised)] p-5 ring-1 ring-[var(--color-on-dark-muted)] sm:p-6">
+            <div className="mb-10 rounded-2xl bg-[var(--color-surface-dark-raised)] p-4 ring-1 ring-[var(--color-on-dark-muted)] sm:p-6">
               <div className="mb-4 flex items-center gap-2">
                 <Clock className="h-4 w-4 text-[var(--color-accent-light)]" strokeWidth={2.2} />
                 <span className="text-sm font-medium text-[var(--color-on-dark-secondary)]">
@@ -144,13 +144,13 @@ export function Programs() {
                   <span className="text-[var(--color-on-dark)]">{mondayLabel}</span>
                 </span>
               </div>
-              <div className="flex gap-3 sm:gap-4">
+              <div className="flex gap-1.5 sm:gap-3">
                 <CountdownCell value={timeLeft.days} label="Days" />
-                <div className="flex items-start pt-3 text-lg font-bold text-[var(--color-on-dark-muted)]">:</div>
+                <div className="flex items-start pt-2 text-base font-bold text-[var(--color-on-dark-muted)] sm:pt-3 sm:text-lg">:</div>
                 <CountdownCell value={timeLeft.hours} label="Hours" />
-                <div className="flex items-start pt-3 text-lg font-bold text-[var(--color-on-dark-muted)]">:</div>
+                <div className="flex items-start pt-2 text-base font-bold text-[var(--color-on-dark-muted)] sm:pt-3 sm:text-lg">:</div>
                 <CountdownCell value={timeLeft.minutes} label="Mins" />
-                <div className="flex items-start pt-3 text-lg font-bold text-[var(--color-on-dark-muted)]">:</div>
+                <div className="flex items-start pt-2 text-base font-bold text-[var(--color-on-dark-muted)] sm:pt-3 sm:text-lg">:</div>
                 <CountdownCell value={timeLeft.seconds} label="Secs" />
               </div>
             </div>

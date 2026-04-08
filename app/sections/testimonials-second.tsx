@@ -46,8 +46,8 @@ export function TestimonialsSecond() {
                 &ldquo;{testimonial.quote}&rdquo;
               </blockquote>
 
-              <div className="flex items-center justify-between">
-                <div>
+              <div className="flex flex-wrap items-center gap-2 sm:justify-between">
+                <div className="min-w-0">
                   <p className="font-[family-name:var(--font-display)] text-sm font-semibold text-[var(--color-ink)]">
                     {testimonial.name}
                   </p>
@@ -55,7 +55,7 @@ export function TestimonialsSecond() {
                     {testimonial.age} &middot; {testimonial.condition}
                   </p>
                 </div>
-                <span className="label-sm rounded-full bg-[var(--color-surface-sunken)] px-2.5 py-1 text-[var(--color-ink-muted)]">
+                <span className="label-sm shrink-0 rounded-full bg-[var(--color-surface-sunken)] px-2.5 py-1 text-[var(--color-ink-muted)]">
                   {testimonial.condition}
                 </span>
               </div>

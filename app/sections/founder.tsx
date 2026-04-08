@@ -67,7 +67,7 @@ export function Founder() {
             </footer>
           </blockquote>
 
-          <div className="flex flex-wrap gap-8 sm:gap-12">
+          <div className="flex flex-wrap gap-6 sm:gap-12">
             {stats.map((stat) => (
               <div key={stat.label}>
                 <span className="number-display block text-2xl text-[var(--color-on-dark)] sm:text-3xl">

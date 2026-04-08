@@ -10,7 +10,7 @@ const stats = [
 export function SocialProof() {
   return (
     <section className="border-y border-[var(--color-border-strong)] bg-[var(--color-surface-raised)]">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-12 gap-y-3 px-6 py-5 sm:gap-x-16 md:gap-x-20">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-6 gap-y-3 px-4 py-5 sm:gap-x-12 sm:px-6 md:gap-x-20">
         {stats.map((stat, i) => (
           <div key={stat.label} className="flex items-baseline gap-2">
             <span className="number-display text-base text-[var(--color-ink)]">
@@ -20,7 +20,7 @@ export function SocialProof() {
               {stat.label}
             </span>
             {i < stats.length - 1 && (
-              <span className="ml-4 hidden h-3 w-px bg-[var(--color-border-strong)] sm:block" />
+              <span className="ml-2 hidden h-3 w-px bg-[var(--color-border-strong)] sm:ml-4 sm:block" />
             )}
           </div>
         ))}
