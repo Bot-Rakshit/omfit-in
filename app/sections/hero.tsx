@@ -88,8 +88,8 @@ export function Hero() {
         <div className="hidden lg:block">
           <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
             <Image
-              src="/images/hero-thali.png"
-              alt="Indian thali meal plan with stethoscope and fitness tracking \u2014 nutrition coaching essentials"
+              src="/images/hero-flatlay.png"
+              alt="Health coaching essentials \u2014 meal plan, progress tracking, stethoscope"
               fill
               className="object-cover"
               sizes="40vw"
