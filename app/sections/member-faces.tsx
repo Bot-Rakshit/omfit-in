@@ -13,13 +13,13 @@ interface Member {
 
 const members: Member[] = [
   { name: "Archana K", age: 38, city: "Pune", tag: "Weight Loss", photo: "/images/members/archana.png" },
-  { name: "Lorraine M", age: 67, city: "Pune", tag: "Powerlifter", photo: "/images/members/lorraine.png" },
+  { name: "Lata M", age: 67, city: "Pune", tag: "Powerlifter", photo: "/images/members/lata.png" },
   { name: "Pravin K", age: 51, city: "USA", tag: "Health Management", photo: "/images/members/pravin.png" },
   { name: "Rajesh T", age: 52, tag: "Type 2 Diabetes", photo: "/images/members/rajesh.png" },
   { name: "Sneha P", age: 29, tag: "Weight Loss", photo: "/images/members/sneha.png" },
   { name: "Dr. Shashi", age: 68, tag: "Hypertension", photo: "/images/members/shashi.png" },
   { name: "Hemant", tag: "Fitness", photo: "/images/members/hemant.png" },
-  { name: "Sabah Mistry", tag: "Strength", photo: "/images/members/sabah.png" },
+  { name: "Sakshi M", tag: "Strength", photo: "/images/members/sakshi.png" },
 ]
 
 // Duplicate for seamless loop

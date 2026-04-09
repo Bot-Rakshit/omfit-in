@@ -24,10 +24,10 @@ const testimonials: Testimonial[] = [
       "A working mother\u2019s inspiring transformation. I lost 12 kg in 5 months and feel more energetic than I have in years.",
   },
   {
-    name: "Lorraine M",
+    name: "Lata M",
     age: 67,
     location: "Pune",
-    photo: "/images/members/lorraine.png",
+    photo: "/images/members/lata.png",
     tags: ["Powerlifter", "8 Gold Medals"],
     quote:
       "I\u2019m stronger than my 30-year-old self. I never dreamt I\u2019d compete as a powerlifter, winning 8 Gold medals for India.",
@@ -64,6 +64,15 @@ const testimonials: Testimonial[] = [
     tags: ["Hypertension"],
     quote:
       "After 6 months, my doctor reduced my BP medication by half.",
+  },
+  {
+    name: "Vikram S",
+    age: 45,
+    location: "USA",
+    photo: "/images/members/vikram.png",
+    tags: ["Type 2 Diabetes"],
+    quote:
+      "As an Indian working in the States, the stress was high which also led to T2 Diabetes. Thanks to the OMFIT team for guiding and supporting me.",
   },
 ]
 
