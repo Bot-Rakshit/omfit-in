@@ -1,31 +1,33 @@
 import { Navbar } from "./sections/navbar"
+import { TopBanner } from "./sections/top-banner"
 import { Hero } from "./sections/hero"
-import { SocialProof } from "./sections/social-proof"
-import { Testimonials } from "./sections/testimonials"
+import { MemberFaces } from "./sections/member-faces"
 import { Programs } from "./sections/programs"
 import { Conditions } from "./sections/conditions"
+import { Testimonials } from "./sections/testimonials"
+import { HowItWorks } from "./sections/how-it-works"
 import { Founder } from "./sections/founder"
-import { TestimonialsSecond } from "./sections/testimonials-second"
-import { Academy } from "./sections/academy"
-import { Pricing } from "./sections/pricing"
+import { InnerCircle } from "./sections/inner-circle"
 import { FinalCTA } from "./sections/final-cta"
 import { Footer } from "./sections/footer"
+import { FloatingWhatsApp } from "./sections/floating-whatsapp"
 
 export default function Home() {
   return (
     <main className="min-h-screen overflow-x-hidden">
+      <TopBanner />
       <Navbar />
       <Hero />
-      <SocialProof />
-      <Testimonials />
+      <MemberFaces />
       <Programs />
       <Conditions />
+      <Testimonials />
+      <HowItWorks />
       <Founder />
-      <TestimonialsSecond />
-      <Academy />
-      <Pricing />
+      <InnerCircle />
       <FinalCTA />
       <Footer />
+      <FloatingWhatsApp />
     </main>
   )
 }

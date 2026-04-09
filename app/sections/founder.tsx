@@ -2,11 +2,13 @@
 
 import Image from "next/image"
 import { Quote } from "lucide-react"
+import { SITE_CONFIG } from "../site-config"
 
 const stats = [
-  { number: "2018", label: "Founded" },
-  { number: "500+", label: "Members" },
-  { number: "15+", label: "Health conditions" },
+  { number: "Founded " + SITE_CONFIG.FOUNDED, label: "" },
+  { number: SITE_CONFIG.STAT_TRANSFORMED, label: "Lifestyles Transformed" },
+  { number: "15+", label: "Health Conditions" },
+  { number: "Worldwide", label: "India, USA & more" },
 ]
 
 export function Founder() {
@@ -18,7 +20,7 @@ export function Founder() {
           <div className="relative mx-auto aspect-[3/4] max-w-md overflow-hidden rounded-2xl lg:mx-0 lg:max-w-none">
             <Image
               src="/images/omkar.jpeg"
-              alt="Omkar — Founder of OMFIT"
+              alt="Omkar \u2014 Founder of OMFIT"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -39,7 +41,7 @@ export function Founder() {
           <span className="label-sm mb-5 text-[var(--color-accent)]">Our story</span>
 
           <h2 className="display-md mb-8 text-[var(--color-on-dark)]">
-            Built from personal frustration with the fitness industry
+            Built From Personal Frustration With the Fitness Industry
           </h2>
 
           <p className="body-lg mb-5 text-[var(--color-on-dark-secondary)]">
@@ -51,15 +53,15 @@ export function Founder() {
           <p className="body-lg mb-10 text-[var(--color-on-dark-secondary)]">
             We work with a scientific approach and a vision to impact 1 billion
             lives. Every program, every meal plan, every coaching session is
-            designed to make you the best version of yourself — naturally.
+            designed to make you the best version of yourself &mdash; naturally.
           </p>
 
           <blockquote className="relative mb-12 rounded-xl border border-[var(--color-on-dark-muted)] bg-[var(--color-surface-dark-raised)] px-6 py-6 sm:px-8">
             <Quote className="mb-3 h-5 w-5 text-[var(--color-accent)] opacity-70" />
             <p className="font-[family-name:var(--font-display)] text-[0.95rem] font-medium leading-relaxed text-[var(--color-on-dark)] italic">
               &ldquo;Aesthetics is not the goal, it is a by-product. Our
-              programs make you the best version of yourself — naturally. No
-              pills and powders. Healthy meals made with love.&rdquo;
+              programs make you the best version of yourself &mdash; naturally.
+              Healthy meals made with love.&rdquo;
             </p>
             <footer className="mt-4 flex items-center gap-3">
               <div className="h-px flex-1 bg-[var(--color-on-dark-muted)]" />
@@ -69,13 +71,15 @@ export function Founder() {
 
           <div className="flex flex-wrap gap-6 sm:gap-12">
             {stats.map((stat) => (
-              <div key={stat.label}>
+              <div key={stat.number}>
                 <span className="number-display block text-2xl text-[var(--color-on-dark)] sm:text-3xl">
                   {stat.number}
                 </span>
-                <span className="mt-1 block text-[0.8rem] font-medium text-[var(--color-on-dark-muted)]">
-                  {stat.label}
-                </span>
+                {stat.label && (
+                  <span className="mt-1 block text-[0.8rem] font-medium text-[var(--color-on-dark-muted)]">
+                    {stat.label}
+                  </span>
+                )}
               </div>
             ))}
           </div>

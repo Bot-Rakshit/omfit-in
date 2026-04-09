@@ -3,25 +3,26 @@ import type { Metadata } from "next"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "OMFIT — Transform Your Health Naturally",
+  title: "OmFit \u2014 Personalised Nutrition Coaching for Diabetes, Thyroid, PCOS & Weight Management",
   description:
-    "Science-backed nutrition & fitness programs for diabetes, hypertension, thyroid & more. 1-on-1 coaching, personalised plans, real results. Since 2018.",
+    "Transform your health naturally with OmFit\u2019s 3-month nutrition coaching program. Personalised Indian meal plans, weekly 1-on-1 coaching, 10,000+ lifestyles transformed since 2018.",
   keywords: [
-    "omfit",
-    "nutrition program India",
-    "online fitness coaching",
+    "nutrition coaching india",
     "diabetes management",
+    "thyroid nutrition",
+    "PCOS diet plan",
+    "online nutritionist india",
+    "omfit",
     "hypertension fitness",
-    "thyroid management",
-    "personal training online",
+    "weight management",
     "health transformation",
   ],
   openGraph: {
-    title: "OMFIT — Transform Your Health Naturally",
+    title: "OmFit \u2014 Personalised Nutrition Coaching for Diabetes, Thyroid, PCOS & Weight Management",
     description:
-      "Science-backed nutrition & fitness. 1-on-1 coaching, personalised plans, real results.",
+      "Transform your health naturally with OmFit\u2019s 3-month nutrition coaching program. Personalised Indian meal plans, weekly 1-on-1 coaching, 10,000+ lifestyles transformed since 2018.",
     url: "https://omfit.in",
-    siteName: "OMFIT",
+    siteName: "OmFit",
     locale: "en_IN",
     type: "website",
   },

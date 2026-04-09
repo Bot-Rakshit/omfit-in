@@ -1,156 +1,163 @@
 "use client"
 
-import { ArrowRight } from "lucide-react"
+import { useState } from "react"
+import {
+  Droplets,
+  Heart,
+  Zap,
+  Circle,
+  Scale,
+  Activity,
+  Pill,
+  HeartPulse,
+  Accessibility,
+  Brain,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react"
 
-/* ── Custom SVG icons ── */
-
-function DiabetesIcon({ className, style }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg viewBox="0 0 32 32" fill="none" className={className} style={style} aria-hidden="true">
-      <path d="M16 4C16 4 8 14.5 8 20a8 8 0 0016 0C24 14.5 16 4 16 4z" fill="currentColor" opacity={0.15} />
-      <path d="M16 4C16 4 8 14.5 8 20a8 8 0 0016 0C24 14.5 16 4 16 4z" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M11.5 20.5h2.5l1.5-3 2 6 1.5-3h2.5" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
+interface Condition {
+  icon: React.ElementType
+  title: string
+  description: string
 }
 
-function HypertensionIcon({ className, style }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg viewBox="0 0 32 32" fill="none" className={className} style={style} aria-hidden="true">
-      <path d="M16 28S4 20 4 13a6.5 6.5 0 0112-3.5A6.5 6.5 0 0128 13C28 20 16 28 16 28z" fill="currentColor" opacity={0.15} />
-      <path d="M16 28S4 20 4 13a6.5 6.5 0 0112-3.5A6.5 6.5 0 0128 13C28 20 16 28 16 28z" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M6 16h5l2-4 3 8 2-4h5" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-function ThyroidIcon({ className, style }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg viewBox="0 0 32 32" fill="none" className={className} style={style} aria-hidden="true">
-      <path d="M16 14c-2-4-6-6-9-4s-3 7 0 10 7 3 9 1" fill="currentColor" opacity={0.15} />
-      <path d="M16 14c2-4 6-6 9-4s3 7 0 10-7 3-9 1" fill="currentColor" opacity={0.15} />
-      <path d="M16 14c-2-4-6-6-9-4s-3 7 0 10 7 3 9 1" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M16 14c2-4 6-6 9-4s3 7 0 10-7 3-9 1" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M16 14v10" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" />
-      <circle cx={16} cy={14} r={1.5} fill="currentColor" />
-    </svg>
-  )
-}
-
-/* ── Data ── */
-
-const conditions = [
+const conditions: Condition[] = [
   {
-    id: "diabetes",
-    icon: DiabetesIcon,
-    color: "#b8860b",
-    bgTint: "rgba(184, 134, 11, 0.04)",
-    borderTint: "rgba(184, 134, 11, 0.12)",
-    accentBg: "rgba(184, 134, 11, 0.07)",
-    title: "Diabetes",
-    subtitle: "Type 2 & Pre-Diabetes",
-    description:
-      "Our nutrition-first programs are designed to help you lower blood sugar naturally. We work alongside your physician to craft meal plans and activity routines tailored to your glycaemic profile.",
-    statNumber: "\u22121.2%",
-    statLabel: "avg HbA1c improvement in 90 days",
-    href: "#diabetes",
+    icon: Droplets,
+    title: "Type 2 Diabetes & Pre-Diabetes",
+    description: "Lower blood sugar naturally with nutrition-first protocols.",
   },
   {
-    id: "hypertension",
-    icon: HypertensionIcon,
-    color: "#c4704b",
-    bgTint: "rgba(196, 112, 75, 0.04)",
-    borderTint: "rgba(196, 112, 75, 0.12)",
-    accentBg: "rgba(196, 112, 75, 0.07)",
-    title: "Hypertension",
-    subtitle: "Blood Pressure Management",
-    description:
-      "Sustained lifestyle changes \u2014 not just medication. Our coaches guide you through DASH-aligned meals, stress management, and progressive exercise to bring your numbers into a healthy range.",
-    statNumber: "82%",
-    statLabel: "of members report reduced BP within 60 days",
-    href: "#hypertension",
+    icon: Heart,
+    title: "Hypertension (Blood Pressure)",
+    description: "DASH-aligned meals, stress management & progressive exercise.",
   },
   {
-    id: "thyroid",
-    icon: ThyroidIcon,
-    color: "#3d6b4f",
-    bgTint: "rgba(61, 107, 79, 0.04)",
-    borderTint: "rgba(61, 107, 79, 0.12)",
-    accentBg: "rgba(61, 107, 79, 0.07)",
-    title: "Thyroid",
-    subtitle: "Hypo & Hyperthyroidism",
-    description:
-      "Energy crashes, weight fluctuations, brain fog \u2014 we understand. Our programs address root causes with targeted nutrition, sleep optimisation, and metabolic coaching your body actually responds to.",
-    statNumber: "91%",
-    statLabel: "report improved energy & reduced fatigue",
-    href: "#thyroid",
+    icon: Zap,
+    title: "Thyroid (Hypo & Hyper / Hashimoto\u2019s)",
+    description: "Targeted nutrition for energy, weight & metabolic health.",
+  },
+  {
+    icon: Circle,
+    title: "PCOS / PCOD",
+    description: "Reduce insulin resistance, support hormonal balance & fertility.",
+  },
+  {
+    icon: Scale,
+    title: "Weight Management",
+    description: "Sustainable fat loss through real food, not crash diets.",
+  },
+  {
+    icon: Activity,
+    title: "Cholesterol & Heart Health",
+    description: "Nutrition strategies to improve lipid profiles naturally.",
+  },
+  {
+    icon: Pill,
+    title: "Fatty Liver",
+    description: "Dietary interventions to reduce liver fat and restore function.",
+  },
+  {
+    icon: HeartPulse,
+    title: "Chronic Kidney Disease (CKD)",
+    description: "Personalised plans to support kidney health.",
+  },
+  {
+    icon: Accessibility,
+    title: "Varicose Veins",
+    description: "Exercise + nutrition to improve circulation and manage symptoms.",
+  },
+  {
+    icon: Accessibility,
+    title: "Musculoskeletal Conditions",
+    description: "Injury recovery, joint health & pain management.",
+  },
+  {
+    icon: Activity,
+    title: "Gut Health & Digestive Issues",
+    description: "Bloating, IBS, acid reflux \u2014 addressed through food.",
+  },
+  {
+    icon: Circle,
+    title: "Hormonal Imbalances",
+    description: "Beyond PCOS \u2014 broader hormonal health for men & women.",
+  },
+  {
+    icon: Zap,
+    title: "Autoimmune Conditions",
+    description: "Anti-inflammatory nutrition & immune support.",
+  },
+  {
+    icon: Heart,
+    title: "Geriatric / Senior Fitness (55+)",
+    description: "Strength, balance, bone density & independence.",
+  },
+  {
+    icon: Brain,
+    title: "Stress, Sleep & Mental Wellness",
+    description: "Nutrition and lifestyle changes for better mental health.",
   },
 ]
 
 export function Conditions() {
+  const [showAll, setShowAll] = useState(false)
+  const visible = showAll ? conditions : conditions.slice(0, 8)
+
   return (
-    <section className="bg-[var(--color-surface-sunken)] py-24 sm:py-32">
+    <section id="conditions" className="bg-[var(--color-surface-sunken)] py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         {/* Header */}
         <div className="mx-auto mb-16 max-w-2xl text-center sm:mb-20">
           <span className="label-sm mb-4 inline-block text-[var(--color-brand)]">Specialised care</span>
           <h2 className="display-lg mb-5 text-[var(--color-ink)]">
-            Programs designed for
-            <br className="hidden sm:block" /> your condition
+            Specialised Care for 15+ Health Conditions
           </h2>
           <p className="body-lg text-[var(--color-ink-secondary)]">
-            We communicate directly with your physician to ensure every meal
-            plan and training protocol complements your medical treatment.
+            We communicate directly with your physician to ensure every plan
+            complements your medical treatment.
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid gap-6 md:grid-cols-3 lg:gap-8">
-          {conditions.map((condition) => {
+        {/* Grid */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {visible.map((condition) => {
             const Icon = condition.icon
             return (
               <div
-                key={condition.id}
-                className="group relative flex flex-col rounded-2xl border bg-[var(--color-surface-raised)] p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg sm:p-8"
-                style={{ borderColor: condition.borderTint }}
+                key={condition.title}
+                className="group rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-raised)] p-5 transition-all duration-200 hover:border-[var(--color-border-strong)] hover:shadow-md"
               >
-                <div
-                  className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl"
-                  style={{ backgroundColor: condition.accentBg }}
-                >
-                  <Icon className="h-6 w-6" style={{ color: condition.color }} />
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-brand-muted)]">
+                  <Icon className="h-5 w-5 text-[var(--color-brand)]" strokeWidth={1.8} />
                 </div>
-
-                <h3 className="mb-1 font-[family-name:var(--font-display)] text-xl font-semibold tracking-tight text-[var(--color-ink)]">
+                <h3 className="mb-1.5 font-[family-name:var(--font-display)] text-[0.95rem] font-semibold tracking-tight text-[var(--color-ink)]">
                   {condition.title}
                 </h3>
-                <p className="label-sm mb-4" style={{ color: condition.color }}>
-                  {condition.subtitle}
+                <p className="text-sm leading-relaxed text-[var(--color-ink-secondary)]">
+                  {condition.description}
                 </p>
-
-                <p className="body-md mb-6 flex-1 text-[var(--color-ink-secondary)]">{condition.description}</p>
-
-                <div className="mb-6 rounded-xl px-5 py-4" style={{ backgroundColor: condition.accentBg }}>
-                  <span className="number-display block text-3xl sm:text-4xl" style={{ color: condition.color }}>
-                    {condition.statNumber}
-                  </span>
-                  <span className="mt-1.5 block text-[0.8rem] font-medium leading-snug text-[var(--color-ink-muted)]">
-                    {condition.statLabel}
-                  </span>
-                </div>
-
-                <a
-                  href={condition.href}
-                  className="inline-flex items-center gap-1.5 text-[0.875rem] font-semibold transition-colors"
-                  style={{ color: condition.color }}
-                >
-                  Learn more
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                </a>
               </div>
             )
           })}
         </div>
+
+        {/* Show more/less */}
+        {conditions.length > 8 && (
+          <div className="mt-8 flex justify-center">
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="group inline-flex items-center gap-2 rounded-xl border border-[var(--color-border-strong)] px-6 py-2.5 text-sm font-medium text-[var(--color-ink-secondary)] transition-all hover:border-[var(--color-ink)] hover:text-[var(--color-ink)]"
+            >
+              {showAll ? "Show fewer conditions" : `See all ${conditions.length} conditions`}
+              {showAll ? (
+                <ChevronUp className="h-4 w-4" />
+              ) : (
+                <ChevronDown className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+        )}
       </div>
     </section>
   )

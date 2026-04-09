@@ -2,23 +2,27 @@
 
 import { Phone, Mail, MapPin, Instagram, Youtube, Linkedin } from "lucide-react"
 import Link from "next/link"
+import { SITE_CONFIG } from "../site-config"
 
 const footerLinks = {
   programs: [
     { label: "Nutrition Program", href: "#programs" },
-    { label: "1-on-1 Training", href: "#programs" },
-    { label: "Omfit Academy", href: "#academy" },
-    { label: "Omfit for Parents (55+)", href: "https://omfitforparents.com", external: true },
+    { label: "Personal Training", href: "#programs" },
+    { label: "OmFit Academy", href: "/academy" },
+    { label: "OmFit for Parents", href: SITE_CONFIG.PARENTS_URL, external: true },
   ],
   conditions: [
     { label: "Diabetes", href: "#conditions" },
     { label: "Hypertension", href: "#conditions" },
     { label: "Thyroid", href: "#conditions" },
+    { label: "PCOS", href: "#conditions" },
     { label: "Weight Management", href: "#conditions" },
+    { label: "See all conditions", href: "#conditions" },
   ],
   company: [
     { label: "About Us", href: "#about" },
-    { label: "Careers", href: "#careers" },
+    { label: "Corporate Programs", href: "/corporate" },
+    { label: "Careers", href: "#" },
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
     { label: "Refund Policy", href: "/refund" },
@@ -26,7 +30,7 @@ const footerLinks = {
 }
 
 const socials = [
-  { icon: Instagram, href: "https://instagram.com/omfit.in", label: "Instagram" },
+  { icon: Instagram, href: "https://instagram.com/omfit_lifestyle", label: "Instagram" },
   { icon: Youtube, href: "https://youtube.com/@omfit", label: "YouTube" },
   { icon: Linkedin, href: "https://linkedin.com/company/omfit", label: "LinkedIn" },
 ]
@@ -71,28 +75,28 @@ export function Footer() {
               </span>
             </Link>
             <p className="body-md mt-4 max-w-xs text-[var(--color-on-dark-secondary)]">
-              Science-backed fitness and nutrition programs. Founded in 2018,
-              vision to impact 1 billion lives.
+              Science-backed nutrition &amp; fitness programs. Founded 2018.
+              Vision to impact 1 billion lives.
             </p>
 
             <div className="mt-6 space-y-3">
               <Link
-                href="tel:+918484808896"
+                href={`tel:${SITE_CONFIG.PHONE_RAW}`}
                 className="flex items-start gap-2.5 text-sm text-[var(--color-on-dark-secondary)] transition-colors duration-200 hover:text-[var(--color-on-dark)]"
               >
                 <Phone className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--color-accent)]" />
-                +91 84848 08896
+                {SITE_CONFIG.PHONE}
               </Link>
               <Link
-                href="mailto:hello@omfit.in"
+                href={`mailto:${SITE_CONFIG.EMAIL}`}
                 className="flex items-start gap-2.5 text-sm text-[var(--color-on-dark-secondary)] transition-colors duration-200 hover:text-[var(--color-on-dark)]"
               >
                 <Mail className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--color-accent)]" />
-                hello@omfit.in
+                {SITE_CONFIG.EMAIL}
               </Link>
               <div className="flex items-start gap-2.5 text-sm text-[var(--color-on-dark-muted)]">
                 <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--color-accent)]" />
-                <span>201, Altius, Samarth Colony, Pimple Nilakh, Pune 411027</span>
+                <span>{SITE_CONFIG.ADDRESS}</span>
               </div>
             </div>
           </div>
@@ -131,8 +135,6 @@ export function Footer() {
             <Link href="/terms" className="px-2 py-1 transition-colors duration-200 hover:text-[var(--color-on-dark-secondary)]">Terms</Link>
             <span className="opacity-30">&middot;</span>
             <Link href="/refund" className="px-2 py-1 transition-colors duration-200 hover:text-[var(--color-on-dark-secondary)]">Refunds</Link>
-            <span className="opacity-30">&middot;</span>
-            <Link href="/consent" className="px-2 py-1 transition-colors duration-200 hover:text-[var(--color-on-dark-secondary)]">Consent</Link>
           </div>
         </div>
       </div>
