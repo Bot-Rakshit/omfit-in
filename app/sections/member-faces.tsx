@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { SITE_CONFIG } from "../site-config"
 
 interface Member {
@@ -7,19 +8,18 @@ interface Member {
   age?: number
   city?: string
   tag?: string
-  initials: string
-  color: string
+  photo: string
 }
 
 const members: Member[] = [
-  { name: "Archana K", age: 38, city: "Pune", tag: "Weight Loss", initials: "AK", color: "bg-[var(--color-brand)]" },
-  { name: "Lorraine M", age: 67, city: "Pune", tag: "Powerlifter", initials: "LM", color: "bg-[var(--color-accent)]" },
-  { name: "Pravin K", age: 51, city: "USA", tag: "Health Management", initials: "PK", color: "bg-[var(--color-ink)]" },
-  { name: "Rajesh T", age: 52, tag: "Type 2 Diabetes", initials: "RT", color: "bg-[var(--color-brand-dark)]" },
-  { name: "Sneha P", age: 29, tag: "Weight Loss", initials: "SP", color: "bg-[var(--color-success)]" },
-  { name: "Dr. Shashi", age: 68, tag: "Hypertension", initials: "DS", color: "bg-[var(--color-accent)]" },
-  { name: "Hemant", tag: "Fitness", initials: "H", color: "bg-[var(--color-brand)]" },
-  { name: "Sabah Mistry", tag: "Strength", initials: "SM", color: "bg-[var(--color-ink-secondary)]" },
+  { name: "Archana K", age: 38, city: "Pune", tag: "Weight Loss", photo: "/images/members/archana.png" },
+  { name: "Lorraine M", age: 67, city: "Pune", tag: "Powerlifter", photo: "/images/members/lorraine.png" },
+  { name: "Pravin K", age: 51, city: "USA", tag: "Health Management", photo: "/images/members/pravin.png" },
+  { name: "Rajesh T", age: 52, tag: "Type 2 Diabetes", photo: "/images/members/rajesh.png" },
+  { name: "Sneha P", age: 29, tag: "Weight Loss", photo: "/images/members/sneha.png" },
+  { name: "Dr. Shashi", age: 68, tag: "Hypertension", photo: "/images/members/shashi.png" },
+  { name: "Hemant", tag: "Fitness", photo: "/images/members/hemant.png" },
+  { name: "Sabah Mistry", tag: "Strength", photo: "/images/members/sabah.png" },
 ]
 
 // Duplicate for seamless loop
@@ -28,10 +28,14 @@ const scrollMembers = [...members, ...members]
 function MemberPill({ member }: { member: Member }) {
   return (
     <div className="flex shrink-0 items-center gap-3 rounded-full border border-[var(--color-border)] bg-[var(--color-surface-raised)] px-4 py-2.5 transition-shadow hover:shadow-md">
-      <div
-        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${member.color} text-xs font-bold text-white`}
-      >
-        {member.initials}
+      <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full">
+        <Image
+          src={member.photo}
+          alt={member.name}
+          fill
+          className="object-cover"
+          sizes="40px"
+        />
       </div>
       <div className="min-w-0">
         <p className="text-sm font-semibold text-[var(--color-ink)]">{member.name}</p>

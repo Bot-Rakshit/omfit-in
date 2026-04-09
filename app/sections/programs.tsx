@@ -50,10 +50,10 @@ export function Programs() {
 
           <div className="mb-2">
             <span className="number-display text-3xl text-[var(--color-on-dark)] sm:text-5xl">
-              &#8377;12,000
+              &#8377;18,000
             </span>
             <span className="ml-2 text-sm text-[var(--color-on-dark-muted)]">
-              for 3 months
+              for 3 months &middot; ~&#8377;200/day &middot; EMI available
             </span>
           </div>
 
@@ -81,7 +81,7 @@ export function Programs() {
           {/* CTAs */}
           <div className="flex flex-col gap-3 sm:flex-row">
             <a
-              href={SITE_CONFIG.WHATSAPP_URL}
+              href={SITE_CONFIG.RAZORPAY_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-accent)] px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-accent-light)] active:scale-[0.98]"

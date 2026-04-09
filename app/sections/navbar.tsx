@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X, ArrowUpRight } from "lucide-react"
+import { getBatchInfo, SITE_CONFIG } from "../site-config"
 
 const navLinks = [
   { label: "Programs", href: "#programs" },
@@ -14,6 +15,8 @@ const navLinks = [
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [bannerDismissed, setBannerDismissed] = useState(false)
+  const batch = getBatchInfo()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16)
@@ -28,65 +31,91 @@ export function Navbar() {
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-[var(--color-surface)]/95 shadow-[0_1px_0_var(--color-border-strong)]"
-            : "bg-transparent"
-        }`}
-        style={scrolled ? { backdropFilter: "blur(8px)" } : undefined}
-      >
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8 lg:px-10">
-          <Link href="/" className="group relative z-10 flex items-baseline gap-0.5">
-            <span className="font-[family-name:var(--font-display)] text-[1.35rem] font-bold tracking-tight text-[var(--color-ink)]">
-              OMFIT
-            </span>
-          </Link>
-
-          <div className="hidden items-center gap-1 lg:flex">
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="rounded-lg px-3.5 py-2 text-[0.84rem] font-medium text-[var(--color-ink-secondary)] transition-colors hover:bg-[var(--color-surface-sunken)] hover:text-[var(--color-ink)]"
-              >
-                {link.label}
-              </Link>
-            ))}
+      <div className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-[var(--color-surface)]/95 shadow-[0_1px_0_var(--color-border-strong)]"
+          : "bg-transparent"
+      }`} style={scrolled ? { backdropFilter: "blur(8px)" } : undefined}>
+        {/* Top banner — inside the fixed container */}
+        {!bannerDismissed && (
+          <div className="relative bg-[var(--color-brand)] text-white">
+            <div className="mx-auto flex max-w-7xl items-center justify-center gap-2 px-10 py-2 text-center text-[0.8rem] font-medium">
+              <span>
+                Nutrition Program &mdash; {batch.label} &middot;{" "}
+                <a href={SITE_CONFIG.RAZORPAY_URL} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:no-underline">
+                  Enrol now &rarr;
+                </a>
+              </span>
+            </div>
+            <button
+              onClick={() => setBannerDismissed(true)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-white/70 transition-colors hover:text-white"
+              aria-label="Dismiss banner"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
           </div>
+        )}
 
-          <div className="hidden items-center gap-3 lg:flex">
-            <a
-              href="https://omfitforparents.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-1.5 rounded-full border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3.5 py-1.5 text-[0.78rem] font-medium text-[var(--color-ink-secondary)] transition-all hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
-            >
-              OmFit for Parents
-              <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </a>
-
-            <Link
-              href="#contact"
-              className="rounded-xl bg-[var(--color-brand)] px-5 py-2.5 text-[0.84rem] font-semibold text-white transition-colors hover:bg-[var(--color-brand-dark)] active:scale-[0.97]"
-            >
-              Get Started
+        {/* Navbar */}
+        <header>
+          <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8 lg:px-10">
+            <Link href="/" className="group relative z-10 flex items-baseline gap-0.5">
+              <span className="font-[family-name:var(--font-display)] text-[1.35rem] font-bold tracking-tight text-[var(--color-ink)]">
+                OMFIT
+              </span>
             </Link>
-          </div>
 
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="relative z-10 flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-[var(--color-surface-sunken)] lg:hidden"
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-          >
-            {isOpen ? (
-              <X className="h-5 w-5 text-[var(--color-ink)]" />
-            ) : (
-              <Menu className="h-5 w-5 text-[var(--color-ink)]" />
-            )}
-          </button>
-        </nav>
-      </header>
+            <div className="hidden items-center gap-1 lg:flex">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="rounded-lg px-3.5 py-2 text-[0.84rem] font-medium text-[var(--color-ink-secondary)] transition-colors hover:bg-[var(--color-surface-sunken)] hover:text-[var(--color-ink)]"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            <div className="hidden items-center gap-3 lg:flex">
+              <a
+                href="https://omfitforparents.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-1.5 rounded-full border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3.5 py-1.5 text-[0.78rem] font-medium text-[var(--color-ink-secondary)] transition-all hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+              >
+                OmFit for Parents
+                <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </a>
+
+              <a
+                href={SITE_CONFIG.RAZORPAY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl bg-[var(--color-brand)] px-5 py-2.5 text-[0.84rem] font-semibold text-white transition-colors hover:bg-[var(--color-brand-dark)] active:scale-[0.97]"
+              >
+                Enrol Now
+              </a>
+            </div>
+
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="relative z-10 flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-[var(--color-surface-sunken)] lg:hidden"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+            >
+              {isOpen ? (
+                <X className="h-5 w-5 text-[var(--color-ink)]" />
+              ) : (
+                <Menu className="h-5 w-5 text-[var(--color-ink)]" />
+              )}
+            </button>
+          </nav>
+        </header>
+      </div>
+
+      {/* Spacer to prevent content from hiding behind fixed navbar */}
+      <div className={bannerDismissed ? "h-[72px]" : "h-[108px]"} />
 
       {/* Mobile menu */}
       {isOpen && (
@@ -120,13 +149,15 @@ export function Navbar() {
                 </a>
               </div>
               <div className="mt-3 px-3">
-                <Link
-                  href="#contact"
+                <a
+                  href={SITE_CONFIG.RAZORPAY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}
                   className="block w-full rounded-xl bg-[var(--color-brand)] py-3.5 text-center text-[0.95rem] font-semibold text-white transition-colors hover:bg-[var(--color-brand-dark)] active:scale-[0.98]"
                 >
-                  Get Started
-                </Link>
+                  Enrol Now
+                </a>
               </div>
             </div>
           </div>

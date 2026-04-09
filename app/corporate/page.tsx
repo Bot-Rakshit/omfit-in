@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import {
   ArrowRight,
   MessageCircle,
@@ -54,14 +55,28 @@ export default function CorporatePage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="bg-[var(--color-surface-dark)] px-5 pt-32 pb-16 sm:px-8 sm:pt-36 sm:pb-20 lg:px-10">
-        <div className="mx-auto max-w-4xl text-center">
-          <span className="label-sm mb-4 inline-block text-[var(--color-accent)]">For organisations</span>
-          <h1 className="display-xl mb-5 text-[var(--color-on-dark)]">Corporate Wellness by OmFit</h1>
-          <p className="body-lg mx-auto max-w-2xl text-[var(--color-on-dark-secondary)]">
-            Science-backed wellness programs for India&rsquo;s leading companies.
-            Seminars, workshops, and long-term employee wellness programs.
-          </p>
+      <section className="relative overflow-hidden bg-[var(--color-surface-dark)] px-5 pb-16 sm:px-8 sm:pb-20 lg:px-10">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <span className="label-sm mb-4 inline-block text-[var(--color-accent)]">For organisations</span>
+            <h1 className="display-xl mb-5 text-[var(--color-on-dark)]">Corporate Wellness by OmFit</h1>
+            <p className="body-lg max-w-lg text-[var(--color-on-dark-secondary)]">
+              Science-backed wellness programs for India&rsquo;s leading companies.
+              Seminars, workshops, and long-term employee wellness programs.
+            </p>
+          </div>
+          <div className="hidden lg:block">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl">
+              <Image
+                src="/images/corporate-seminar.png"
+                alt="OmFit corporate wellness seminar in action"
+                fill
+                className="object-cover"
+                sizes="50vw"
+                priority
+              />
+            </div>
+          </div>
         </div>
       </section>
 

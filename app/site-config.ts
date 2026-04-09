@@ -16,6 +16,9 @@ export const SITE_CONFIG = {
   EMAIL: "team@omfit.in",
   ADDRESS: "12, OMFIT, Growworks coworker, Aundh, Pune 411027",
 
+  // Payment
+  RAZORPAY_URL: "https://pages.razorpay.com/pl_Sb4U9kzW4lcoZP/view",
+
   // Links
   WHATSAPP_URL: "https://wa.me/918484808896",
   WHATSAPP_TRAINING_URL:

@@ -1,5 +1,4 @@
 import { Navbar } from "./sections/navbar"
-import { TopBanner } from "./sections/top-banner"
 import { Hero } from "./sections/hero"
 import { MemberFaces } from "./sections/member-faces"
 import { Programs } from "./sections/programs"
@@ -15,7 +14,6 @@ import { FloatingWhatsApp } from "./sections/floating-whatsapp"
 export default function Home() {
   return (
     <main className="min-h-screen overflow-x-hidden">
-      <TopBanner />
       <Navbar />
       <Hero />
       <MemberFaces />

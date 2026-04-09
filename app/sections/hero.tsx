@@ -9,7 +9,7 @@ export function Hero() {
 
   return (
     <section className="relative bg-[var(--color-surface)]">
-      <div className="mx-auto grid min-h-[92dvh] max-w-7xl items-center px-5 pt-24 pb-16 sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20 lg:px-10 lg:pt-28">
+      <div className="mx-auto grid min-h-[85dvh] max-w-7xl items-center px-5 pb-16 sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20 lg:px-10">
         {/* Text */}
         <div>
           <p className="label-sm mb-8 text-[var(--color-brand)]">
@@ -42,7 +42,9 @@ export function Hero() {
           {/* CTAs */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
-              href="#contact"
+              href={SITE_CONFIG.RAZORPAY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-brand)] px-7 py-3.5 text-[0.9375rem] font-semibold text-white transition-colors hover:bg-[var(--color-brand-dark)] active:scale-[0.98]"
             >
               Start Your Transformation
@@ -82,12 +84,12 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Image */}
+        {/* Image — new thali hero */}
         <div className="hidden lg:block">
           <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
             <Image
-              src="/images/hero-flatlay.png"
-              alt="Health coaching essentials \u2014 meal plan, progress tracking, stethoscope"
+              src="/images/hero-thali.png"
+              alt="Indian thali meal plan with stethoscope and fitness tracking \u2014 nutrition coaching essentials"
               fill
               className="object-cover"
               sizes="40vw"

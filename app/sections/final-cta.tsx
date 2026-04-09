@@ -1,26 +1,10 @@
 "use client"
 
-import { useState } from "react"
-import { ArrowRight, MessageCircle } from "lucide-react"
+import { ArrowRight, MessageCircle, ShieldCheck } from "lucide-react"
 import { SITE_CONFIG, getBatchInfo } from "../site-config"
 
 export function FinalCTA() {
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    condition: "",
-  })
-  const [submitted, setSubmitted] = useState(false)
   const batch = getBatchInfo()
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitted(true)
-  }
-
-  const update = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-    setFormData((prev) => ({ ...prev, [field]: e.target.value }))
 
   return (
     <section id="contact" className="px-4 py-16 sm:px-6 sm:py-24">
@@ -29,78 +13,37 @@ export function FinalCTA() {
           Start Your Health Transformation
         </h2>
 
-        <p className="body-md mx-auto mb-8 max-w-sm text-center text-[var(--color-on-dark-secondary)]">
-          Leave your details and our team will reach out within 24 hours.
+        <p className="body-md mx-auto mb-4 max-w-sm text-center text-[var(--color-on-dark-secondary)]">
+          Join {SITE_CONFIG.STAT_TRANSFORMED} members who chose real food over quick fixes.
+          3-month personalised nutrition coaching program.
         </p>
 
-        {submitted ? (
-          <div className="rounded-2xl border border-[var(--color-brand)]/20 bg-[var(--color-brand-glow)] px-6 py-8 text-center">
-            <p className="font-[family-name:var(--font-display)] text-xl font-semibold text-[var(--color-on-dark)]">
-              Thank you, {formData.name.split(" ")[0] || "friend"}!
-            </p>
-            <p className="mt-2 text-sm text-[var(--color-on-dark-secondary)]">
-              We&rsquo;ll call you within 24 hours to get started.
-            </p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-3">
-            <input
-              type="text"
-              required
-              placeholder="Your name"
-              value={formData.name}
-              onChange={update("name")}
-              className="form-input !border-[var(--color-on-dark-muted)] !bg-[var(--color-surface-dark-raised)] !text-[var(--color-on-dark)] placeholder:!text-[var(--color-on-dark-muted)] focus:!border-[var(--color-brand-light)]"
-            />
+        {/* Price */}
+        <div className="mb-8 text-center">
+          <span className="number-display text-3xl text-white sm:text-4xl">&#8377;18,000</span>
+          <span className="ml-2 text-sm text-[var(--color-on-dark-muted)]">for 3 months</span>
+        </div>
 
-            <input
-              type="tel"
-              required
-              placeholder="Phone number"
-              value={formData.phone}
-              onChange={update("phone")}
-              className="form-input !border-[var(--color-on-dark-muted)] !bg-[var(--color-surface-dark-raised)] !text-[var(--color-on-dark)] placeholder:!text-[var(--color-on-dark-muted)] focus:!border-[var(--color-brand-light)]"
-            />
+        {/* Primary CTA — Razorpay */}
+        <a
+          href={SITE_CONFIG.RAZORPAY_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-accent)] px-6 py-4 text-[0.9375rem] font-semibold text-white transition-colors hover:bg-[var(--color-accent-light)] active:scale-[0.98]"
+        >
+          Enrol Now &mdash; Pay Securely
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+        </a>
 
-            <input
-              type="email"
-              placeholder="Email (optional)"
-              value={formData.email}
-              onChange={update("email")}
-              className="form-input !border-[var(--color-on-dark-muted)] !bg-[var(--color-surface-dark-raised)] !text-[var(--color-on-dark)] placeholder:!text-[var(--color-on-dark-muted)] focus:!border-[var(--color-brand-light)]"
-            />
-
-            <select
-              value={formData.condition}
-              onChange={update("condition")}
-              className="form-input !border-[var(--color-on-dark-muted)] !bg-[var(--color-surface-dark-raised)] !text-[var(--color-on-dark)] focus:!border-[var(--color-brand-light)]"
-              style={!formData.condition ? { color: "var(--color-on-dark-muted)" } : undefined}
-            >
-              <option value="" disabled>What are you looking for?</option>
-              <option value="nutrition">Nutrition Coaching (3-month program)</option>
-              <option value="diabetes">Diabetes Management</option>
-              <option value="hypertension">Hypertension / BP</option>
-              <option value="thyroid">Thyroid Management</option>
-              <option value="pcos">PCOS / PCOD</option>
-              <option value="weight-loss">Weight Loss</option>
-              <option value="fitness">General Fitness</option>
-              <option value="other">Other</option>
-            </select>
-
-            <button
-              type="submit"
-              className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-accent)] px-6 py-3.5 text-[0.9375rem] font-semibold text-white transition-colors hover:bg-[var(--color-accent-light)] active:scale-[0.98]"
-            >
-              Get Started
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </button>
-          </form>
-        )}
+        <div className="mt-3 flex items-center justify-center gap-2 text-xs text-[var(--color-on-dark-muted)]">
+          <ShieldCheck className="h-3.5 w-3.5" />
+          Secure payment via Razorpay &middot; EMI available &middot; 7-day refund guarantee
+        </div>
 
         {/* WhatsApp */}
         <div className="mt-6 flex items-center gap-3">
           <div className="h-px flex-1 bg-[var(--color-on-dark-muted)]" />
-          <span className="text-xs text-[var(--color-on-dark-muted)]">or</span>
+          <span className="text-xs text-[var(--color-on-dark-muted)]">or talk to us first</span>
           <div className="h-px flex-1 bg-[var(--color-on-dark-muted)]" />
         </div>
 
@@ -115,7 +58,7 @@ export function FinalCTA() {
         </a>
 
         <p className="mt-5 text-center text-xs text-[var(--color-on-dark-muted)]">
-          {batch.label} &middot; 7-day refund guarantee
+          {batch.label}
         </p>
       </div>
     </section>
