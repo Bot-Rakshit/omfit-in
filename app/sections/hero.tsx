@@ -1,11 +1,32 @@
 "use client"
 
+import { useState } from "react"
 import Image from "next/image"
-import { ArrowRight, MessageCircle } from "lucide-react"
+import { ArrowRight, MessageCircle, Phone } from "lucide-react"
 import { SITE_CONFIG, getBatchInfo } from "../site-config"
 
 export function Hero() {
   const batch = getBatchInfo()
+  const [callbackPhone, setCallbackPhone] = useState("")
+  const [callbackName, setCallbackName] = useState("")
+  const [callbackSent, setCallbackSent] = useState(false)
+  const [sending, setSending] = useState(false)
+
+  const handleCallback = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSending(true)
+    try {
+      await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ source: "hero", name: callbackName, phone: callbackPhone }),
+      })
+    } catch {
+      // still show success
+    }
+    setSending(false)
+    setCallbackSent(true)
+  }
 
   return (
     <section className="relative bg-[var(--color-surface)]">
@@ -60,6 +81,42 @@ export function Hero() {
               <MessageCircle className="h-4 w-4" />
               Talk to us on WhatsApp
             </a>
+          </div>
+
+          {/* Callback form */}
+          <div className="mt-6 max-w-md">
+            {callbackSent ? (
+              <p className="text-sm font-medium text-[var(--color-brand)]">
+                We&rsquo;ll call you within 24 hours.
+              </p>
+            ) : (
+              <form onSubmit={handleCallback} className="flex flex-col gap-2 sm:flex-row">
+                <input
+                  type="text"
+                  required
+                  placeholder="Your name"
+                  value={callbackName}
+                  onChange={(e) => setCallbackName(e.target.value)}
+                  className="form-input !py-2.5 !text-sm sm:flex-1"
+                />
+                <input
+                  type="tel"
+                  required
+                  placeholder="Phone number"
+                  value={callbackPhone}
+                  onChange={(e) => setCallbackPhone(e.target.value)}
+                  className="form-input !py-2.5 !text-sm sm:flex-1"
+                />
+                <button
+                  type="submit"
+                  disabled={sending}
+                  className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-[var(--color-surface-sunken)] px-4 py-2.5 text-sm font-medium text-[var(--color-ink-secondary)] transition-colors hover:bg-[var(--color-border-strong)] hover:text-[var(--color-ink)] disabled:opacity-60"
+                >
+                  <Phone className="h-3.5 w-3.5" />
+                  {sending ? "Sending…" : "Get a Callback"}
+                </button>
+              </form>
+            )}
           </div>
 
           {/* Trust badges */}
