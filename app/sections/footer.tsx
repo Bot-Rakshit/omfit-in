@@ -1,6 +1,6 @@
 "use client"
 
-import { Phone, Mail, MapPin, Instagram, Youtube, Linkedin } from "lucide-react"
+import { Phone, Mail, MapPin, Instagram, Youtube } from "lucide-react"
 import Link from "next/link"
 import { SITE_CONFIG } from "../site-config"
 
@@ -30,9 +30,8 @@ const footerLinks = {
 }
 
 const socials = [
-  { icon: Instagram, href: "https://instagram.com/omfit_lifestyle", label: "Instagram" },
-  { icon: Youtube, href: "https://youtube.com/@omfit", label: "YouTube" },
-  { icon: Linkedin, href: "https://linkedin.com/company/omfit", label: "LinkedIn" },
+  { icon: Instagram, href: "https://www.instagram.com/omfit_lifestyle/", label: "Instagram" },
+  { icon: Youtube, href: "https://www.youtube.com/@teamomfit", label: "YouTube" },
 ]
 
 function FooterColumn({
