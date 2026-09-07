@@ -1,8 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowRight, MessageCircle, ShieldCheck, Phone } from "lucide-react"
+import { ArrowRight, MessageCircle, ShieldCheck, Phone, Check } from "lucide-react"
 import { SITE_CONFIG, getBatchInfo } from "../site-config"
+import { Reveal } from "../components/reveal"
 
 export function FinalCTA() {
   const batch = getBatchInfo()
@@ -28,99 +29,104 @@ export function FinalCTA() {
   }
 
   return (
-    <section id="contact" className="px-4 py-16 sm:px-6 sm:py-24">
-      <div className="mx-auto max-w-2xl overflow-hidden rounded-3xl bg-[var(--color-surface-dark)] px-6 py-12 sm:rounded-[2rem] sm:px-12 sm:py-16">
-        <h2 className="display-md mb-3 text-center text-[var(--color-on-dark)]">
-          Start Your Health Transformation
-        </h2>
+    <section id="contact" className="bg-surface py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        <Reveal className="relative isolate mx-auto max-w-3xl overflow-hidden rounded-[2rem] bg-surface-dark p-8 sm:p-12">
+          <div className="dark-grid pointer-events-none absolute inset-0 -z-10" />
 
-        <p className="body-md mx-auto mb-4 max-w-sm text-center text-[var(--color-on-dark-secondary)]">
-          Join {SITE_CONFIG.STAT_TRANSFORMED} members who chose real food over quick fixes.
-          3-month personalised nutrition coaching program.
-        </p>
+          <div className="text-center">
+            <span className="eyebrow eyebrow-center mb-5 inline-flex text-accent">
+              <span className="live-dot" />
+              {batch.label}
+            </span>
 
-        {/* Price */}
-        <div className="mb-8 text-center">
-          <span className="number-display text-3xl text-white sm:text-4xl">&#8377;18,000</span>
-          <span className="ml-2 text-sm text-[var(--color-on-dark-muted)]">for 3 months</span>
-        </div>
+            <h2 className="display-lg mb-4 text-on-dark">Start Your Health Transformation</h2>
 
-        {/* Primary CTA — Razorpay */}
-        <a
-          href={SITE_CONFIG.RAZORPAY_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-accent)] px-6 py-4 text-[0.9375rem] font-semibold text-white transition-colors hover:bg-[var(--color-accent-light)] active:scale-[0.98]"
-        >
-          Enrol Now &mdash; Pay Securely
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-        </a>
+            <p className="body-md mx-auto mb-7 max-w-md text-on-dark-secondary">
+              Join {SITE_CONFIG.STAT_TRANSFORMED} members who chose real food over quick
+              fixes. 3-month personalised nutrition coaching program.
+            </p>
 
-        <div className="mt-3 flex items-center justify-center gap-2 text-xs text-[var(--color-on-dark-muted)]">
-          <ShieldCheck className="h-3.5 w-3.5" />
-          Secure payment via Razorpay &middot; EMI available &middot; 7-day refund guarantee
-        </div>
+            <div className="mb-8 flex items-baseline justify-center gap-2">
+              <span className="number-display text-4xl text-on-dark">&#8377;18,000</span>
+              <span className="text-sm text-on-dark-muted">for 3 months</span>
+            </div>
+          </div>
 
-        {/* Callback form */}
-        <div className="mt-6 flex items-center gap-3">
-          <div className="h-px flex-1 bg-[var(--color-on-dark-muted)]" />
-          <span className="text-xs text-[var(--color-on-dark-muted)]">or get a free callback</span>
-          <div className="h-px flex-1 bg-[var(--color-on-dark-muted)]" />
-        </div>
-
-        {sent ? (
-          <p className="mt-4 text-center text-sm font-medium text-[var(--color-brand-light)]">
-            We&rsquo;ll call you within 24 hours.
-          </p>
-        ) : (
-          <form onSubmit={handleCallback} className="mt-4 flex flex-col gap-2 sm:flex-row">
-            <input
-              type="text"
-              required
-              placeholder="Your name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="form-input !border-[var(--color-on-dark-muted)] !bg-[var(--color-surface-dark-raised)] !py-2.5 !text-sm !text-[var(--color-on-dark)] placeholder:!text-[var(--color-on-dark-muted)] focus:!border-[var(--color-brand-light)] sm:flex-1"
-            />
-            <input
-              type="tel"
-              required
-              placeholder="Phone number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="form-input !border-[var(--color-on-dark-muted)] !bg-[var(--color-surface-dark-raised)] !py-2.5 !text-sm !text-[var(--color-on-dark)] placeholder:!text-[var(--color-on-dark-muted)] focus:!border-[var(--color-brand-light)] sm:flex-1"
-            />
-            <button
-              type="submit"
-              disabled={sending}
-              className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl border border-[var(--color-on-dark-muted)] px-4 py-2.5 text-sm font-medium text-[var(--color-on-dark-secondary)] transition-colors hover:border-[var(--color-on-dark-secondary)] hover:text-[var(--color-on-dark)] disabled:opacity-60"
+          <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <a
+              href={SITE_CONFIG.RAZORPAY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-accent btn-lg"
             >
-              <Phone className="h-3.5 w-3.5" />
-              {sending ? "Sending…" : "Callback"}
-            </button>
-          </form>
-        )}
+              Enrol Now &mdash; Pay Securely
+              <ArrowRight className="btn-arrow h-4 w-4" />
+            </a>
+            <a
+              href={SITE_CONFIG.WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-on-dark btn-lg"
+            >
+              <MessageCircle className="h-4 w-4" />
+              Talk on WhatsApp
+            </a>
+          </div>
 
-        {/* WhatsApp */}
-        <div className="mt-5 flex items-center gap-3">
-          <div className="h-px flex-1 bg-[var(--color-on-dark-muted)]" />
-          <span className="text-xs text-[var(--color-on-dark-muted)]">or</span>
-          <div className="h-px flex-1 bg-[var(--color-on-dark-muted)]" />
-        </div>
+          <p className="mt-4 flex items-center justify-center gap-2 text-center text-xs text-on-dark-muted">
+            <ShieldCheck className="h-3.5 w-3.5 shrink-0" />
+            Secure Razorpay checkout &middot; EMI available &middot; 7-day refund guarantee
+          </p>
 
-        <a
-          href={SITE_CONFIG.WHATSAPP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--color-on-dark-muted)] px-6 py-3 text-[0.875rem] font-medium text-[var(--color-on-dark-secondary)] transition-all hover:border-[var(--color-on-dark-secondary)] hover:text-[var(--color-on-dark)]"
-        >
-          <MessageCircle className="h-4 w-4" />
-          Talk to us on WhatsApp
-        </a>
+          {/* Callback form */}
+          <div className="mt-9 flex items-center gap-3">
+            <div className="h-px flex-1 bg-on-dark-faint" />
+            <span className="label-sm text-on-dark-muted">or get a free callback</span>
+            <div className="h-px flex-1 bg-on-dark-faint" />
+          </div>
 
-        <p className="mt-5 text-center text-xs text-[var(--color-on-dark-muted)]">
-          {batch.label}
-        </p>
+          {sent ? (
+            <div className="fade-in mt-5 flex items-center justify-center gap-3">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-on-dark-faint">
+                <Check className="h-4 w-4 text-brand-light" strokeWidth={3} />
+              </span>
+              <p className="text-sm font-medium text-on-dark">
+                We&rsquo;ll call you within 24 hours.
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={handleCallback} className="mt-5 flex flex-col gap-2 sm:flex-row">
+              <label className="sr-only" htmlFor="cta-name">Your name</label>
+              <input
+                id="cta-name"
+                type="text"
+                required
+                autoComplete="name"
+                placeholder="Your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="form-input form-input-dark sm:flex-1"
+              />
+              <label className="sr-only" htmlFor="cta-phone">Phone number</label>
+              <input
+                id="cta-phone"
+                type="tel"
+                required
+                inputMode="tel"
+                autoComplete="tel"
+                placeholder="Phone number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="form-input form-input-dark sm:flex-1"
+              />
+              <button type="submit" disabled={sending} className="btn btn-on-dark shrink-0">
+                <Phone className="h-3.5 w-3.5" />
+                {sending ? "Sending…" : "Call me"}
+              </button>
+            </form>
+          )}
+        </Reveal>
       </div>
     </section>
   )

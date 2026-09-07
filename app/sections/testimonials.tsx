@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { ChevronDown, ChevronUp } from "lucide-react"
+import { Reveal } from "../components/reveal"
 
 interface Testimonial {
   name: string
@@ -13,6 +14,16 @@ interface Testimonial {
   quote: string
 }
 
+const featured: Testimonial = {
+  name: "Lata M",
+  age: 67,
+  location: "Pune",
+  photo: "/images/members/lata.png",
+  tags: ["Powerlifter", "8 Gold Medals"],
+  quote:
+    "I’m stronger than my 30-year-old self. I never dreamt I’d compete as a powerlifter, winning 8 Gold medals for India.",
+}
+
 const testimonials: Testimonial[] = [
   {
     name: "Archana K",
@@ -21,16 +32,7 @@ const testimonials: Testimonial[] = [
     photo: "/images/members/archana.png",
     tags: ["Weight Loss"],
     quote:
-      "A working mother\u2019s inspiring transformation. I lost 12 kg in 5 months and feel more energetic than I have in years.",
-  },
-  {
-    name: "Lata M",
-    age: 67,
-    location: "Pune",
-    photo: "/images/members/lata.png",
-    tags: ["Powerlifter", "8 Gold Medals"],
-    quote:
-      "I\u2019m stronger than my 30-year-old self. I never dreamt I\u2019d compete as a powerlifter, winning 8 Gold medals for India.",
+      "A working mother’s inspiring transformation. I lost 12 kg in 5 months and feel more energetic than I have in years.",
   },
   {
     name: "Pravin K",
@@ -54,16 +56,14 @@ const testimonials: Testimonial[] = [
     age: 29,
     photo: "/images/members/sneha.png",
     tags: ["Weight Loss"],
-    quote:
-      "I went from not being able to climb stairs to doing squats with 40 kg.",
+    quote: "I went from not being able to climb stairs to doing squats with 40 kg.",
   },
   {
     name: "Dr. Shashi",
     age: 68,
     photo: "/images/members/shashi.png",
     tags: ["Hypertension"],
-    quote:
-      "After 6 months, my doctor reduced my BP medication by half.",
+    quote: "After 6 months, my doctor reduced my BP medication by half.",
   },
   {
     name: "Vikram S",
@@ -76,82 +76,128 @@ const testimonials: Testimonial[] = [
   },
 ]
 
+const VISIBLE_COUNT = 3
+
+function Tag({ label }: { label: string }) {
+  return (
+    <span className="label-sm rounded-full bg-accent-muted px-2.5 py-1 text-accent">{label}</span>
+  )
+}
+
+function Byline({ testimonial, size }: { testimonial: Testimonial; size: "sm" | "lg" }) {
+  const box = size === "lg" ? "h-16 w-16" : "h-12 w-12"
+  return (
+    <div className="flex items-start gap-4">
+      <div className={`relative ${box} shrink-0 overflow-hidden rounded-full`}>
+        <Image
+          src={testimonial.photo}
+          alt={testimonial.name}
+          fill
+          className="object-cover"
+          sizes={size === "lg" ? "64px" : "48px"}
+        />
+      </div>
+      <div className="min-w-0">
+        <h3
+          className={`font-display font-semibold text-ink ${size === "lg" ? "text-lg" : "text-base"}`}
+        >
+          {testimonial.name}
+        </h3>
+        <p className="mt-0.5 text-sm text-ink-muted">
+          {testimonial.age}
+          {testimonial.location && ` · ${testimonial.location}`}
+        </p>
+      </div>
+    </div>
+  )
+}
+
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-raised)] transition-shadow duration-200 hover:shadow-lg">
-      <div className="p-6 sm:p-7">
-        <div className="mb-5 flex items-start gap-4">
-          <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full">
-            <Image
-              src={testimonial.photo}
-              alt={testimonial.name}
-              fill
-              className="object-cover"
-              sizes="48px"
-            />
-          </div>
-          <div className="min-w-0">
-            <h3 className="font-[family-name:var(--font-display)] text-base font-semibold text-[var(--color-ink)]">
-              {testimonial.name}
-            </h3>
-            <p className="mt-0.5 text-sm text-[var(--color-ink-muted)]">
-              {testimonial.age}
-              {testimonial.location && ` \u00B7 ${testimonial.location}`}
-            </p>
-          </div>
-        </div>
+    <div className="card card-hover h-full p-6">
+      <Byline testimonial={testimonial} size="sm" />
 
-        <div className="mb-4 flex flex-wrap gap-1.5">
-          {testimonial.tags.map((tag) => (
-            <span
-              key={tag}
-              className="label-sm rounded-full bg-[var(--color-surface-sunken)] px-2.5 py-1 text-[var(--color-ink-muted)]"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <blockquote className="body-md leading-relaxed text-[var(--color-ink-secondary)]">
-          &ldquo;{testimonial.quote}&rdquo;
-        </blockquote>
+      <div className="mt-5 mb-4 flex flex-wrap gap-1.5">
+        {testimonial.tags.map((tag) => (
+          <Tag key={tag} label={tag} />
+        ))}
       </div>
+
+      <blockquote className="body-md leading-relaxed text-ink-secondary">
+        &ldquo;{testimonial.quote}&rdquo;
+      </blockquote>
     </div>
   )
 }
 
 export function Testimonials() {
   const [showAll, setShowAll] = useState(false)
-  const visible = showAll ? testimonials : testimonials.slice(0, 6)
+  const initial = testimonials.slice(0, VISIBLE_COUNT)
+  const rest = testimonials.slice(VISIBLE_COUNT)
 
   return (
-    <section className="bg-[var(--color-surface)] py-20 sm:py-28">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="mb-12 max-w-xl sm:mb-16">
-          <span className="label-sm mb-4 inline-block text-[var(--color-accent)]">
-            Real stories
-          </span>
-          <h2 className="display-md">Stories That Inspire</h2>
-        </div>
+    <section className="bg-surface py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        <Reveal className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
+          <span className="eyebrow eyebrow-center mb-4 text-accent">Real stories</span>
+          <h2 className="display-lg text-ink">Stories That Inspire</h2>
+        </Reveal>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 sm:gap-7">
-          {visible.map((testimonial) => (
-            <TestimonialCard key={testimonial.name} testimonial={testimonial} />
+        {/* Featured */}
+        <Reveal className="mb-5">
+          <div className="card p-7 sm:p-10">
+            <div className="grid gap-6 lg:grid-cols-[0.4fr_1fr] lg:items-center lg:gap-12">
+              <div>
+                <Byline testimonial={featured} size="lg" />
+                <div className="mt-5 flex flex-wrap gap-1.5">
+                  {featured.tags.map((tag) => (
+                    <Tag key={tag} label={tag} />
+                  ))}
+                </div>
+              </div>
+              <blockquote className="relative">
+                <span
+                  aria-hidden="true"
+                  className="font-display text-6xl leading-none text-accent/40"
+                >
+                  &ldquo;
+                </span>
+                <p className="-mt-4 font-display text-xl leading-snug text-ink sm:text-2xl">
+                  {featured.quote}
+                </p>
+              </blockquote>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Rest */}
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {initial.map((testimonial, i) => (
+            <Reveal key={testimonial.name} delay={i * 60}>
+              <TestimonialCard testimonial={testimonial} />
+            </Reveal>
           ))}
         </div>
 
-        {testimonials.length > 6 && (
+        <div className="collapsible" data-state={showAll ? "open" : "closed"} aria-hidden={!showAll}>
+          <div className="overflow-hidden">
+            <div className="grid gap-5 pt-5 pb-2 sm:grid-cols-2 lg:grid-cols-3">
+              {rest.map((testimonial) => (
+                <TestimonialCard key={testimonial.name} testimonial={testimonial} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {rest.length > 0 && (
           <div className="mt-8 flex justify-center">
             <button
               onClick={() => setShowAll(!showAll)}
-              className="group inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-brand)] transition-colors hover:text-[var(--color-brand-dark)]"
+              aria-expanded={showAll}
+              className="btn btn-ghost btn-sm"
             >
               {showAll ? "Show fewer" : "See more stories"}
-              {showAll ? (
-                <ChevronUp className="h-4 w-4" />
-              ) : (
-                <ChevronDown className="h-4 w-4" />
-              )}
+              {showAll ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </button>
           </div>
         )}

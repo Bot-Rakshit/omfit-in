@@ -20,6 +20,7 @@ export function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16)
+    onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
@@ -29,27 +30,49 @@ export function Navbar() {
     return () => { document.body.style.overflow = "" }
   }, [isOpen])
 
+  useEffect(() => {
+    if (!isOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false)
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [isOpen])
+
   return (
     <>
-      <div className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-[var(--color-surface)]/95 shadow-[0_1px_0_var(--color-border-strong)]"
-          : "bg-transparent"
-      }`} style={scrolled ? { backdropFilter: "blur(8px)" } : undefined}>
-        {/* Top banner — inside the fixed container */}
+      {/* Drawer backdrop — a sibling of the header so it paints beneath it */}
+      <div
+        data-state={isOpen ? "open" : "closed"}
+        onClick={() => setIsOpen(false)}
+        aria-hidden={!isOpen}
+        style={{ pointerEvents: isOpen ? "auto" : "none" }}
+        className="fixed inset-0 z-40 bg-ink/15 opacity-0 transition-opacity duration-200 data-[state=open]:opacity-100 lg:hidden"
+      />
+
+      <div
+        className="nav-shell sticky top-0 z-50"
+        data-state={isOpen ? "open" : scrolled ? "scrolled" : "top"}
+      >
+        {/* Top banner */}
         {!bannerDismissed && (
-          <div className="relative bg-[var(--color-brand)] text-white">
-            <div className="mx-auto flex max-w-7xl items-center justify-center gap-2 px-10 py-2 text-center text-[0.8rem] font-medium">
+          <div className="relative bg-brand text-white">
+            <div className="mx-auto flex max-w-7xl items-center justify-center gap-2 px-10 py-1.5 text-center text-[0.78rem] font-medium">
               <span>
                 Nutrition Program &mdash; {batch.label} &middot;{" "}
-                <a href={SITE_CONFIG.RAZORPAY_URL} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:no-underline">
+                <a
+                  href={SITE_CONFIG.RAZORPAY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-2 hover:no-underline"
+                >
                   Enrol now &rarr;
                 </a>
               </span>
             </div>
             <button
               onClick={() => setBannerDismissed(true)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-white/70 transition-colors hover:text-white"
+              className="btn absolute right-2 top-[calc(50%-0.875rem)] h-7 w-7 rounded-lg p-0 text-white/70 hover:text-white"
               aria-label="Dismiss banner"
             >
               <X className="h-3.5 w-3.5" />
@@ -60,8 +83,8 @@ export function Navbar() {
         {/* Navbar */}
         <header>
           <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8 lg:px-10">
-            <Link href="/" className="group relative z-10 flex items-baseline gap-0.5">
-              <span className="font-[family-name:var(--font-display)] text-[1.35rem] font-bold tracking-tight text-[var(--color-ink)]">
+            <Link href="/" className="relative z-10 flex items-baseline gap-0.5">
+              <span className="font-display text-[1.35rem] font-bold tracking-tight text-ink">
                 OMFIT
               </span>
             </Link>
@@ -71,7 +94,7 @@ export function Navbar() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="rounded-lg px-3.5 py-2 text-[0.84rem] font-medium text-[var(--color-ink-secondary)] transition-colors hover:bg-[var(--color-surface-sunken)] hover:text-[var(--color-ink)]"
+                  className="rounded-lg px-3.5 py-2 text-[0.84rem] font-medium text-ink-secondary transition-colors hover:bg-surface-sunken hover:text-ink"
                 >
                   {link.label}
                 </Link>
@@ -80,20 +103,20 @@ export function Navbar() {
 
             <div className="hidden items-center gap-3 lg:flex">
               <a
-                href="https://omfitforparents.com"
+                href={SITE_CONFIG.PARENTS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-1.5 rounded-full border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3.5 py-1.5 text-[0.78rem] font-medium text-[var(--color-ink-secondary)] transition-all hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                className="btn btn-secondary btn-sm rounded-full"
               >
                 OmFit for Parents
-                <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                <ArrowUpRight className="btn-arrow-diag h-3.5 w-3.5" />
               </a>
 
               <a
                 href={SITE_CONFIG.RAZORPAY_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-xl bg-[var(--color-brand)] px-5 py-2.5 text-[0.84rem] font-semibold text-white transition-colors hover:bg-[var(--color-brand-dark)] active:scale-[0.97]"
+                className="btn btn-primary btn-sm"
               >
                 Enrol Now
               </a>
@@ -101,68 +124,60 @@ export function Navbar() {
 
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="relative z-10 flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-[var(--color-surface-sunken)] lg:hidden"
+              className="btn btn-ghost relative z-10 h-10 w-10 rounded-lg p-0 lg:hidden"
               aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
             >
-              {isOpen ? (
-                <X className="h-5 w-5 text-[var(--color-ink)]" />
-              ) : (
-                <Menu className="h-5 w-5 text-[var(--color-ink)]" />
-              )}
+              {isOpen ? <X className="h-5 w-5 text-ink" /> : <Menu className="h-5 w-5 text-ink" />}
             </button>
           </nav>
         </header>
-      </div>
 
-      {/* Spacer to prevent content from hiding behind fixed navbar */}
-      <div className={bannerDismissed ? "h-[72px]" : "h-[108px]"} />
-
-      {/* Mobile menu */}
-      {isOpen && (
-        <>
-          <div
-            className="fixed inset-0 z-40 bg-[var(--color-ink)]/15 lg:hidden"
-            onClick={() => setIsOpen(false)}
-          />
-          <div className="fixed top-0 left-0 right-0 z-40 bg-[var(--color-surface)] pt-20 pb-8 shadow-xl lg:hidden">
-            <div className="mx-auto flex max-w-7xl flex-col gap-1 px-5 sm:px-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="block rounded-xl px-3 py-3.5 text-[1.05rem] font-medium text-[var(--color-ink)] transition-colors hover:bg-[var(--color-surface-sunken)]"
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <div className="mt-2 border-t border-[var(--color-border-strong)] pt-4">
-                <a
-                  href="https://omfitforparents.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-2 rounded-xl px-3 py-3.5 text-[0.95rem] font-medium text-[var(--color-ink-secondary)] transition-colors hover:bg-[var(--color-surface-sunken)]"
-                >
-                  OmFit for Parents
-                  <ArrowUpRight className="h-3.5 w-3.5" />
-                </a>
-              </div>
-              <div className="mt-3 px-3">
-                <a
-                  href={SITE_CONFIG.RAZORPAY_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setIsOpen(false)}
-                  className="block w-full rounded-xl bg-[var(--color-brand)] py-3.5 text-center text-[0.95rem] font-semibold text-white transition-colors hover:bg-[var(--color-brand-dark)] active:scale-[0.98]"
-                >
-                  Enrol Now
-                </a>
-              </div>
+        {/* Mobile drawer — always rendered, animated */}
+        <div
+          data-state={isOpen ? "open" : "closed"}
+          className="drawer-panel absolute inset-x-0 top-full -z-10 bg-surface pb-8 pt-4 shadow-[var(--shadow-float)] lg:hidden"
+        >
+          <div className="mx-auto flex max-w-7xl flex-col gap-1 px-5 sm:px-8">
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                tabIndex={isOpen ? undefined : -1}
+                onClick={() => setIsOpen(false)}
+                className="block rounded-xl px-3 py-3.5 text-[1.05rem] font-medium text-ink transition-colors hover:bg-surface-sunken"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="mt-2 border-t border-border-strong pt-4">
+              <a
+                href={SITE_CONFIG.PARENTS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                tabIndex={isOpen ? undefined : -1}
+                onClick={() => setIsOpen(false)}
+                className="flex items-center gap-2 rounded-xl px-3 py-3.5 text-[0.95rem] font-medium text-ink-secondary transition-colors hover:bg-surface-sunken"
+              >
+                OmFit for Parents
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </a>
+            </div>
+            <div className="mt-3 px-3">
+              <a
+                href={SITE_CONFIG.RAZORPAY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                tabIndex={isOpen ? undefined : -1}
+                onClick={() => setIsOpen(false)}
+                className="btn btn-primary w-full"
+              >
+                Enrol Now
+              </a>
             </div>
           </div>
-        </>
-      )}
+        </div>
+      </div>
     </>
   )
 }

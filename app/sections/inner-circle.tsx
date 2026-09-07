@@ -1,6 +1,7 @@
 "use client"
 
 import { Users, Calendar, GraduationCap, Heart } from "lucide-react"
+import { Reveal } from "../components/reveal"
 
 const features = [
   {
@@ -27,35 +28,33 @@ const features = [
 
 export function InnerCircle() {
   return (
-    <section className="bg-[var(--color-surface-sunken)] py-20 sm:py-28">
+    <section className="bg-surface-sunken py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="label-sm mb-4 inline-block text-[var(--color-brand)]">Community</span>
-          <h2 className="display-md mb-5 text-[var(--color-ink)]">The OmFit Inner Circle</h2>
-          <p className="body-lg text-[var(--color-ink-secondary)]">
-            When you become a member, you join the OmFit Inner Circle — a community
-            driven by positivity, enthusiasm, and fitness. Weekly meetings with the
-            founder, knowledge classes, fitness challenges, member meet-ups, and a
-            support group of like-minded people.
+        <Reveal className="mx-auto max-w-2xl text-center">
+          <span className="eyebrow eyebrow-center mb-4 text-brand">Community</span>
+          <h2 className="display-lg mb-5 text-ink">The OmFit Inner Circle</h2>
+          <p className="body-lg text-ink-secondary">
+            Every member joins the OmFit Inner Circle &mdash; a community driven by
+            positivity, enthusiasm, and fitness. It is the part members tell us they
+            did not expect, and would not give up.
           </p>
-        </div>
+        </Reveal>
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          {features.map((feature) => {
+          {features.map((feature, i) => {
             const Icon = feature.icon
             return (
-              <div
-                key={feature.title}
-                className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-raised)] p-6 text-center transition-shadow hover:shadow-md"
-              >
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--color-brand-muted)]">
-                  <Icon className="h-5 w-5 text-[var(--color-brand)]" strokeWidth={1.8} />
+              <Reveal key={feature.title} delay={i * 60}>
+                <div className="card card-hover h-full p-6 text-left">
+                  <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-brand-muted">
+                    <Icon className="h-5 w-5 text-brand" strokeWidth={1.8} />
+                  </div>
+                  <h3 className="mb-2 font-display text-base font-semibold text-ink">
+                    {feature.title}
+                  </h3>
+                  <p className="body-md text-ink-secondary">{feature.description}</p>
                 </div>
-                <h3 className="mb-2 font-[family-name:var(--font-display)] text-base font-semibold text-[var(--color-ink)]">
-                  {feature.title}
-                </h3>
-                <p className="body-md text-[var(--color-ink-secondary)]">{feature.description}</p>
-              </div>
+              </Reveal>
             )
           })}
         </div>
