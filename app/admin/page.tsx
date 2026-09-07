@@ -2,18 +2,15 @@ import { redirect } from "next/navigation"
 import { isAuthed } from "@/app/lib/admin-auth"
 import { sql } from "@/app/lib/db"
 import LogoutButton from "./logout-button"
+import LeadsTable, { type Lead } from "./leads-table"
 
 export const dynamic = "force-dynamic"
 
-type WaitlistRow = {
-  id: number
-  source: string
-  name: string | null
-  email: string | null
-  phone: string | null
-  company: string | null
-  interest: string | null
-  created_at: string
+type WaitlistRow = Omit<Lead, "created_at"> & { created_at: string | Date }
+
+/** Calendar date in IST, e.g. "2026-09-07" — so "today" means today in India. */
+function istDate(value: string | Date) {
+  return new Date(value).toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" })
 }
 
 export default async function AdminDashboard() {
@@ -23,100 +20,83 @@ export default async function AdminDashboard() {
     SELECT id, source, name, email, phone, company, interest, created_at
     FROM waitlist
     ORDER BY created_at DESC
-    LIMIT 500
+    LIMIT 2000
   `) as unknown as WaitlistRow[]
 
-  const sources = Array.from(new Set(rows.map((r) => r.source)))
-  const countsBySource: Record<string, number> = {}
-  for (const r of rows) countsBySource[r.source] = (countsBySource[r.source] || 0) + 1
+  const leads: Lead[] = rows.map((r) => ({
+    ...r,
+    created_at: new Date(r.created_at).toISOString(),
+  }))
+
+  const today = istDate(new Date())
+  const todayCount = leads.filter((l) => istDate(l.created_at) === today).length
+
+  const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000
+  const weekCount = leads.filter((l) => new Date(l.created_at).getTime() >= weekAgo).length
+
+  const newest = leads[0]
+    ? new Date(leads[0].created_at).toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        day: "numeric",
+        month: "short",
+        hour: "numeric",
+        minute: "2-digit",
+      })
+    : "—"
 
   return (
     <div className="min-h-screen bg-neutral-50">
-      <header className="bg-white border-b border-neutral-200">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <header className="border-b border-neutral-200 bg-white">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div>
             <h1 className="text-lg font-semibold text-neutral-900">OmFit Admin</h1>
-            <p className="text-xs text-neutral-500">Waitlist & captured submissions</p>
+            <p className="text-xs text-neutral-500">
+              Everyone who left their details through a form on omfit.in
+            </p>
           </div>
           <LogoutButton />
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-8">
-        <section className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-          <StatCard label="Total entries" value={rows.length.toString()} />
-          {sources.map((s) => (
-            <StatCard key={s} label={s} value={(countsBySource[s] || 0).toString()} />
-          ))}
+      <main className="mx-auto max-w-7xl px-6 py-8">
+        <section className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-4">
+          <StatCard label="Total leads" value={leads.length.toString()} hint="All time" />
+          <StatCard label="Today" value={todayCount.toString()} hint="Since midnight IST" />
+          <StatCard label="Last 7 days" value={weekCount.toString()} hint="Rolling week" />
+          <StatCard label="Most recent" value={newest} hint="Latest submission" small />
         </section>
 
-        <section className="bg-white border border-neutral-200 rounded-xl overflow-hidden">
-          <div className="px-4 py-3 border-b border-neutral-200 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-neutral-900">Submissions</h2>
-            <span className="text-xs text-neutral-500">Showing latest {rows.length}</span>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="bg-neutral-50 text-neutral-600">
-                <tr>
-                  <Th>When</Th>
-                  <Th>Source</Th>
-                  <Th>Name</Th>
-                  <Th>Email</Th>
-                  <Th>Phone</Th>
-                  <Th>Company</Th>
-                  <Th>Interest</Th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.length === 0 && (
-                  <tr>
-                    <td colSpan={7} className="px-4 py-10 text-center text-neutral-500">
-                      No submissions yet.
-                    </td>
-                  </tr>
-                )}
-                {rows.map((r) => (
-                  <tr key={r.id} className="border-t border-neutral-100">
-                    <Td>{new Date(r.created_at).toLocaleString()}</Td>
-                    <Td>
-                      <span className="inline-flex px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-700 text-xs font-medium">
-                        {r.source}
-                      </span>
-                    </Td>
-                    <Td>{r.name || "—"}</Td>
-                    <Td>{r.email || "—"}</Td>
-                    <Td>{r.phone || "—"}</Td>
-                    <Td>{r.company || "—"}</Td>
-                    <Td>{r.interest || "—"}</Td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
+        <LeadsTable leads={leads} />
+
+        <p className="mt-6 text-xs text-neutral-400">
+          Callback forms promise a call within 24 hours. Showing the most recent 2,000 submissions —
+          the CSV download includes every matching lead, not just what is on screen.
+        </p>
       </main>
     </div>
   )
 }
 
-function StatCard({ label, value }: { label: string; value: string }) {
+function StatCard({
+  label,
+  value,
+  hint,
+  small,
+}: {
+  label: string
+  value: string
+  hint: string
+  small?: boolean
+}) {
   return (
-    <div className="bg-white border border-neutral-200 rounded-xl px-4 py-3">
-      <div className="text-xs text-neutral-500 capitalize">{label}</div>
-      <div className="text-2xl font-semibold text-neutral-900 mt-1">{value}</div>
+    <div className="rounded-xl border border-neutral-200 bg-white px-4 py-3">
+      <div className="text-xs font-medium text-neutral-500">{label}</div>
+      <div
+        className={`mt-1 font-semibold tabular-nums text-neutral-900 ${small ? "text-base" : "text-2xl"}`}
+      >
+        {value}
+      </div>
+      <div className="mt-0.5 text-xs text-neutral-400">{hint}</div>
     </div>
   )
-}
-
-function Th({ children }: { children: React.ReactNode }) {
-  return (
-    <th className="text-left px-4 py-2 font-medium text-xs uppercase tracking-wide">
-      {children}
-    </th>
-  )
-}
-
-function Td({ children }: { children: React.ReactNode }) {
-  return <td className="px-4 py-2 text-neutral-800 whitespace-nowrap">{children}</td>
 }
